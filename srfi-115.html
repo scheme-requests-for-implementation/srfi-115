@@ -80,6 +80,7 @@ subscribe to the list.  You can access previous messages via
 
 <ul>
       <li>Received: <a href="http://srfi.schemers.org/cgi-bin/viewcvs.cgi/*checkout*/srfi/srfi-115/srfi-115.html?rev=1.1">2013/10/08</a></li>
+      <li>Revised: <a href="http://srfi.schemers.org/cgi-bin/viewcvs.cgi/*checkout*/srfi/srfi-115/srfi-115.html?rev=1.2">2013/11/17</a></li>
       <li>Draft: 2013/10/12-2013/12/12</li>
     </ul>
 
@@ -101,7 +102,8 @@ subscribe to the list.  You can access previous messages via
     <li><a href="#SRE_2dSyntax_Character-Sets">Character Sets</a></li>
     <li><a href="#SRE_2dSyntax_Named-Character-Sets">Named Character Sets</a></li>
     <li><a href="#SRE_2dSyntax_Boundary-Assertions">Boundary Assertions</a></li>
-    <li><a href="#SRE_2dSyntax_Extended-Patterns">Extended Patterns</a></li>
+    <li><a href="#SRE_2dSyntax_Non-Greedy-Patterns">Non-Greedy Patterns</a></li>
+    <li><a href="#SRE_2dSyntax_Look-Around-Patterns">Look Around Patterns</a></li>
 </ul>
 </ul>
 <li><a href="#Implementation">Implementation</a></li>
@@ -186,6 +188,8 @@ subscribe to the list.  You can access previous messages via
   implementations), but I'll wait to see if it's requested in the
   discussion.
 
+<p> Library-level features aren't supported in R7RS.
+
 <p>
   There aren't enough examples.
 
@@ -194,20 +198,25 @@ subscribe to the list.  You can access previous messages via
 <p>
 <h1><a name="Rationale">Rationale</a></h1>
 
-<p>
-  Regular expressions are the lingua franca of string matching today,
-  used in everything from editors to search engines to APIs for
-  everything in between.  Other tools may be better suited to specific
-  purposes, but it is assumed any modern language provide regular
-  expression support.
+<p> Regular expressions, coming from a long history of formal language
+  theory, are today the lingua franca of simple string matching.  A
+  regular expression is an expression describing a regular language,
+  the simplest level in the Chomsky hierarchy.  They have the nice
+  property that they can match in linear time, whereas parsers for the
+  next level in the hierarchy require cubic time.  This combined with
+  their conciseness led them to be a popular choice for searching in
+  editors, tools and search interfaces.  Other tools may be better
+  suited to specific purposes, but it is assumed any modern language
+  provide regular expression support.
 
-<p>
-  The choice to use SREs instead of strings for regular expressions is
-  a natural one, since they are easier to read and extend as well as
-  being both faster and simpler to compile.  An efficient reference
-  implementation of this SRFI can be written in 800 lines of code,
-  whereas in IrRegex the full PCRE parser alone requires over 500
-  lines.
+<p> SREs were first introduced in SCSH as an s-expression based
+  alternative to the more common string based description.  This
+  format offers many advantages, including being easier to read and
+  write (notably with structured editors), easier to compose (with no
+  escaping issues), and faster and simpler to compile.  An efficient
+  reference implementation of this SRFI can be written in under 1000
+  lines of code, whereas in IrRegex the full PCRE parser alone
+  requires over 500 lines.
 
 <p>
 
@@ -222,8 +231,8 @@ subscribe to the list.  You can access previous messages via
 </tr>
 <tr>
 <td><a href="#proc-regexp_3f">regexp?</a></td>
-<td><a href="#proc-regexp-match">regexp-match</a></td>
-<td><a href="#proc-regexp-match_3f">regexp-match?</a></td>
+<td><a href="#proc-regexp-matches">regexp-matches</a></td>
+<td><a href="#proc-regexp-matches_3f">regexp-matches?</a></td>
 <td><a href="#proc-regexp-search">regexp-search</a></td>
 </tr>
 <tr>
@@ -235,14 +244,14 @@ subscribe to the list.  You can access previous messages via
 <tr>
 <td><a href="#proc-regexp-replace">regexp-replace</a></td>
 <td><a href="#proc-regexp-replace-all">regexp-replace-all</a></td>
-<td><a href="#proc-rx-match_3f">rx-match?</a></td>
-<td><a href="#proc-rx-match-count">rx-match-count</a></td>
+<td><a href="#proc-regexp-match_3f">regexp-match?</a></td>
+<td><a href="#proc-regexp-match-count">regexp-match-count</a></td>
 </tr>
 <tr>
-<td><a href="#proc-rx-match-submatch">rx-match-submatch</a></td>
-<td><a href="#proc-rx-match-submatch-start">rx-match-submatch-start</a></td>
-<td><a href="#proc-rx-match-submatch-end">rx-match-submatch-end</a></td>
-<td><a href="#proc-rx-match-_3elist">rx-match-&gt;list</a></td>
+<td><a href="#proc-regexp-match-submatch">regexp-match-submatch</a></td>
+<td><a href="#proc-regexp-match-submatch-start">regexp-match-submatch-start</a></td>
+<td><a href="#proc-regexp-match-submatch-end">regexp-match-submatch-end</a></td>
+<td><a href="#proc-regexp-match-_3elist">regexp-match-&gt;list</a></td>
 </tr>
 </table>
 
@@ -324,16 +333,14 @@ subscribe to the list.  You can access previous messages via
 <td><a href="#proc-look-behind">look-behind</a></td>
 <td><a href="#proc-neg-look-ahead">neg-look-ahead</a></td>
 <td><a href="#proc-neg-look-behind">neg-look-behind</a></td>
-</tr><tr><td><a href="#proc-atomic">atomic</a></td>
-<td><a href="#proc-if">if</a></td>
-<td><a href="#proc-commit">commit</a></td>
-</tr></table>
+</tr>
+</table>
 
 <h1><a name="Types-and-Naming-Conventions">Types and Naming Conventions</a></h1>
 
 <p>
   We introduce two new types, <code>regexp</code> and
-  <code>rx-match</code>, which are disjoint from all other types.  We
+  <code>regexp-match</code>, which are disjoint from all other types.  We
   also introduce the concept of an "SRE," which is not a disjoint type
   but is a Scheme object following the specification described below.
 
@@ -350,12 +357,12 @@ subscribe to the list.  You can access previous messages via
 <li><var>char-set</var>: a SRFI 14 character set
 <li><var>cset-sre</var>: an sre which corresponds to matching a single character out of a set of characters
 <li><var>end</var>: an exact, non-negative integer, defaulting to the <code>(string-length str)</code>
-<li><var>finish</var>: a procedure <code>(lambda (i rx-match str obj) ...)</code>
+<li><var>finish</var>: a procedure <code>(lambda (i regexp-match str obj) ...)</code>
 <li><var>obj</var>: any object
 <li><var>knil</var>: any object
-<li><var>kons</var>: a procedure <code>(lambda (i rx-match str obj) ...)</code>
+<li><var>kons</var>: a procedure <code>(lambda (i regexp-match str obj) ...)</code>
 <li><var>re</var>: an SRE or pre-compiled regexp object
-<li><var>rx-match</var>: an rx-match object from a successful match
+<li><var>regexp-match</var>: an regexp-match object from a successful match
 <li><var>sre</var>: an SRE as described below
 <li><var>start</var>: an exact, non-negative integer, defaulting to 0
 <li><var>str</var>: a string
@@ -376,13 +383,12 @@ subscribe to the list.  You can access previous messages via
   the features will be desirable, and if left unspecified people will
   provide their own, often incompatible, extensions.
 
-<p>
-  On the other hand it is acknowledged that not all implementations
-  will be able to support all extensions.  Some, like <code>commit</code>,
-  are specific to backtracking, some are difficult to implement for
-  DFA implementations, and some, like <code>backref</code>, are prohibitively
-  expensive for any implementation.  Furthermore, even if an
-  implementation has Unicode support, its regexp library may not.
+<p> On the other hand it is acknowledged that not all implementations
+  will be able to support all extensions.  Some are difficult to
+  implement for DFA implementations, and some, like
+  <code>backref</code>, are prohibitively expensive for any
+  implementation.  Furthermore, even if an implementation has Unicode
+  support, its regexp library may not.
 
 <p>
   To resolve these differences we divide the syntax into a minimal
@@ -394,13 +400,14 @@ subscribe to the list.  You can access previous messages via
 
 <p>
 <ul>
-<li><code>regexp-extended</code> - the extended patterns described below are supported
+<li><code>regexp-non-greedy</code> - the non-greedy repetition patterns <code>??</code>, <code>*?</code>, and <code>**?</code> are supported
+<li><code>regexp-look-around</code> - the <code>[neg]-look-ahead</code> and <code>[neg]-look-behind</code> zero-width assertions are supported
 <li><code>regexp-backrefs</code> - the <code>backref</code> pattern is supported
 <li><code>regexp-unicode</code> - regexp character sets support Unicode
 </ul>
 
 <p>
-  The first two simply refer to support for certain SRE patterns.
+  The first three simply refer to support for certain SRE patterns.
 
 <p>
   <code>regexp-unicode</code> indicates support for Unicode contexts.
@@ -431,6 +438,9 @@ subscribe to the list.  You can access previous messages via
   unmodified if it is already a regexp.  Raises an error if
   <var>re</var> is neither a regexp nor a valid representation of an
   SRE.
+
+<p> Mutating <var>re</var> may invalidate the resulting regexp,
+  causing unspecified results if subsequently used for matching.
 
 <p>
 <dt>(<a name="proc-rx"><code class="proc-def">rx</code></a> <var>sre</var> <var>...</var>) => regexp
@@ -484,32 +494,32 @@ subscribe to the list.  You can access previous messages via
   Returns true iff <var>obj</var> is a regexp.
 
 <p>
-<dt>(<a name="proc-regexp-match"><code class="proc-def">regexp-match</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => rx-match-or-false
+<dt>(<a name="proc-regexp-matches"><code class="proc-def">regexp-matches</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => regexp-match-or-false
 <dd class="proc-def"></dd>
 
 <p>
-  Returns an rx-match object if <var>re</var> successfully matches the entire
+  Returns an regexp-match object if <var>re</var> successfully matches the entire
   string <var>str</var> from <var>start</var> (inclusive) to <var>end</var> (exclusive), or #f is the
-  match fails.  The rx-match object will contain information needed to
+  match fails.  The regexp-match object will contain information needed to
   extract any submatches.
 
 <p>
-<dt>(<a name="proc-regexp-match_3f"><code class="proc-def">regexp-match?</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => boolean?
+<dt>(<a name="proc-regexp-matches_3f"><code class="proc-def">regexp-matches?</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => boolean?
 <dd class="proc-def"></dd>
 
 <p>
-  Returns <code>#t</code> if <var>re</var> matches <var>str</var> as in regexp-match, or
-  <code>#f</code> otherwise.  May be faster than regexp-match since it
+  Returns <code>#t</code> if <var>re</var> matches <var>str</var> as in regexp-matches, or
+  <code>#f</code> otherwise.  May be faster than regexp-matches since it
   doesn't need to return submatch data.
 
 <p>
-<dt>(<a name="proc-regexp-search"><code class="proc-def">regexp-search</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => rx-match-or-false
+<dt>(<a name="proc-regexp-search"><code class="proc-def">regexp-search</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => regexp-match-or-false
 <dd class="proc-def"></dd>
 
 <p>
-  Returns an rx-match object if <var>re</var> successfully matches a substring
+  Returns an regexp-match object if <var>re</var> successfully matches a substring
   of <var>str</var> between <var>start</var> (inclusive) and <var>end</var> (exclusive), or
-  <code>#f</code> is the match fails.  The rx-match object will contain
+  <code>#f</code> is the match fails.  The regexp-match object will contain
   information needed to extract any submatches.
 
 <p>
@@ -521,13 +531,13 @@ subscribe to the list.  You can access previous messages via
   for the regexp <var>re</var> so long as a match can be found.  On each
   successful match, applies
 <pre class="code-example">
-   (<var>kons</var> <i>i</i> <i>rx-match</i> <i>str</i> <i>acc</i>)
+   (<var>kons</var> <i>i</i> <i>regexp-match</i> <i>str</i> <i>acc</i>)
 </pre>
   where <i>i</i> is the index since the last match (beginning with <var>start</var>),
-  <i>rx-match</i> is the resulting match, and <i>acc</i> is the result of the
+  <i>regexp-match</i> is the resulting match, and <i>acc</i> is the result of the
   previous <var>kons</var> application, beginning with <var>knil</var>.  When no more
-  matches can be found, calls <var>finish</var> with the same argument, except
-  that <i>rx-match</i> is #f.
+  matches can be found, calls <var>finish</var> with the same arguments, except
+  that <i>regexp-match</i> is #f.
 
 <p>
   By default <var>finish</var> just returns <i>acc</i>.
@@ -616,56 +626,58 @@ subscribe to the list.  You can access previous messages via
 </pre>
 
 
-<dt>(<a name="proc-rx-match_3f"><code class="proc-def">rx-match?</code></a> <var>obj</var>) => boolean
+<dt>(<a name="proc-regexp-match_3f"><code class="proc-def">regexp-match?</code></a> <var>obj</var>) => boolean
 <dd class="proc-def"></dd>
 
 <p>
-  Returns true iff <var>obj</var> is a successful match from <var>regexp-match</var> or
+  Returns true iff <var>obj</var> is a successful match from <var>regexp-matches</var> or
   <var>regexp-search</var>.
 
 <p>
-<dt>(<a name="proc-rx-match-count"><code class="proc-def">rx-match-count</code></a> <var>rx-match</var>) => integer
+<dt>(<a name="proc-regexp-match-count"><code class="proc-def">regexp-match-count</code></a> <var>regexp-match</var>) => integer
 <dd class="proc-def"></dd>
 
 <p>
-  Returns the number of submatches of rx-match, regardless of whether
+  Returns the number of submatches of regexp-match, regardless of whether
   they matched or not.
 
 <p>
-<dt>(<a name="proc-rx-match-submatch"><code class="proc-def">rx-match-submatch</code></a> <var>rx-match</var> <var>str</var> <var>field</var>) => string-or-false
+<dt>(<a name="proc-regexp-match-submatch"><code class="proc-def">regexp-match-submatch</code></a> <var>regexp-match</var> <var>field</var>) => string-or-false
+<dd class="proc-def"></dd>
+
+<p> Returns the substring matched in <var>regexp-match</var>
+  corresponding to <var>field</var>, either an integer or a symbol for
+  a named submatch.  Index 0 refers to the entire match, index 1 to
+  the first lexicographic submatch, and so on.  If passed an integer
+  outside the range of matches, or a symbol which does not correspond
+  to a named submatch of the pattern, it is an error.  If the
+  corresponding submatch did not match, returns false.
+
+<p> The result of extracting a submatch after the original matched
+string has been mutated is unspecified.
+
+<p>
+<dt>(<a name="proc-regexp-match-submatch-start"><code class="proc-def">regexp-match-submatch-start</code></a> <var>regexp-match</var> <var>field</var>) => integer-or-false
 <dd class="proc-def"></dd>
 
 <p>
-  Returns the substring of <var>str</var> in <var>rx-match</var> corresponding to
-  <var>field</var>, either an integer or a symbol for a named submatch.  Index
-  0 refers to the entire match, index 1 to the first lexicographic
-  submatch, and so on.  If an integer outside the range of matches, or
-  a symbol is passed which does not correspond to a named submatch of
-  the pattern, it is an error.  If the corresponding submatch did not
-  match, returns false.
+  Returns the start index <var>regexp-match</var> corresponding to
+  <var>field</var>, as in <var>regexp-match-submatch</var>.
 
 <p>
-<dt>(<a name="proc-rx-match-submatch-start"><code class="proc-def">rx-match-submatch-start</code></a> <var>rx-match</var> <var>str</var> <var>field</var>) => integer-or-false
+<dt>(<a name="proc-regexp-match-submatch-end"><code class="proc-def">regexp-match-submatch-end</code></a> <var>regexp-match</var> <var>field</var>) => integer-or-false
 <dd class="proc-def"></dd>
 
 <p>
-  Returns the start index of <var>str</var> in <var>rx-match</var> corresponding to
-  <var>field</var>, as in <var>rx-match-submatch</var>.
+  Returns the end index in <var>regexp-match</var> corresponding to
+  <var>field</var>, as in <var>regexp-match-submatch</var>.
 
 <p>
-<dt>(<a name="proc-rx-match-submatch-end"><code class="proc-def">rx-match-submatch-end</code></a> <var>rx-match</var> <var>str</var> <var>field</var>) => integer-or-false
+<dt>(<a name="proc-regexp-match-_3elist"><code class="proc-def">regexp-match-&gt;list</code></a> <var>regexp-match</var>) => list
 <dd class="proc-def"></dd>
 
 <p>
-  Returns the end index of <var>str</var> in <var>rx-match</var> corresponding to
-  <var>field</var>, as in <var>rx-match-submatch</var>.
-
-<p>
-<dt>(<a name="proc-rx-match-_3elist"><code class="proc-def">rx-match-&gt;list</code></a> <var>rx-match</var> <var>str</var>) => list
-<dd class="proc-def"></dd>
-
-<p>
-  Returns a list of all submatches in <var>rx-match</var> as string or false,
+  Returns a list of all submatches in <var>regexp-match</var> as string or false,
   beginning with the entire match 0.
 
 <p>
@@ -709,7 +721,7 @@ subscribe to the list.  You can access previous messages via
      | (w/unicode   &lt;sre&gt; ...)     ; Introduce a unicode context.
      | (w/ascii &lt;sre&gt; ...)         ; Introduce an ascii context.
 
-     | bos                         ; Beginning/end of string.
+     | bos                         ; Beginning of string.
      | eos                         ; End of string.
 
      | bol                         ; Beginning of line.
@@ -733,9 +745,6 @@ subscribe to the list.  You can access previous messages via
      | (look-behind sre ...)       ; Zero-width look-behind assertion.
      | (neg-look-ahead sre ...)    ; Zero-width negative look-ahead assertion.
      | (neg-look-behind sre ...)   ; Zero-width negative look-behind assertion.
-     | (atomic sre ...)            ; Match once and don't backtrack.
-     | (if test pass fail)         ; Conditional patterns.
-     | commit                      ; Suppress backtracking.
 </pre>
 
 
@@ -782,7 +791,7 @@ subscribe to the list.  You can access previous messages via
 
 <p>
 <pre class="code-example">
-   (regexp-search "needle" "hayneedlehay") =&gt; #&lt;rx-match&gt;
+   (regexp-search "needle" "hayneedlehay") =&gt; #&lt;regexp-match&gt;
    (regexp-search "needle" "haynEEdlehay") =&gt; #f
 </pre>
 
@@ -797,7 +806,7 @@ subscribe to the list.  You can access previous messages via
 
 <p>
 <pre class="code-example">
-   (regexp-search '(: "one" space "two" space "three") "one two three") =&gt; #&lt;rx-match&gt;
+   (regexp-search '(: "one" space "two" space "three") "one two three") =&gt; #&lt;regexp-match&gt;
 </pre>
 
 
@@ -811,7 +820,7 @@ subscribe to the list.  You can access previous messages via
 
 <p>
 <pre class="code-example">
-   (regexp-search '(or "eeney" "meeney" "miney") "meeney") =&gt; #&lt;rx-match&gt;
+   (regexp-search '(or "eeney" "meeney" "miney") "meeney") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(or "eeney" "meeney" "miney") "moe") =&gt; #f
 </pre>
 
@@ -819,12 +828,19 @@ subscribe to the list.  You can access previous messages via
 <dt>(<a name="proc-w_2fnocase"><code class="proc-def">w/nocase</code></a> <var>sre</var> <var>...</var>)
 <dd class="proc-def"></dd>
 
-<p>
-  Enclosed <var>sres</var> are case-insensitive.
+<p> Enclosed <var>sres</var> are case-insensitive.  In a Unicode
+  context character and string literals match with the default simple
+  Unicode case-insensitive matching, and character sets match if any
+  character in the set matches case-insensitively.  Implementations
+  may, but are not required to, handle variable length case
+  conversions, such as #\x00DF "ß" matching the two characters "SS".
+
+  In an ASCII context only the 52 ASCII letters "a-zA-Z" match
+  case-insensitively to each other.
 
 <p>
 <pre class="code-example">
-   (regexp-search '(w/nocase "needle") "haynEEdlehay") =&gt; #&lt;rx-match&gt;
+   (regexp-search '(w/nocase "needle") "haynEEdlehay") =&gt; #&lt;regexp-match&gt;
 </pre>
 
 
@@ -836,7 +852,7 @@ subscribe to the list.  You can access previous messages via
 
 <p>
 <pre class="code-example">
-   (regexp-search '(w/nocase "SMALL" (w/case "BIG")) "smallBIGsmall") =&gt; #&lt;rx-match&gt;
+   (regexp-search '(w/nocase "SMALL" (w/case "BIG")) "smallBIGsmall") =&gt; #&lt;regexp-match&gt;
 </pre>
 
 
@@ -851,7 +867,7 @@ subscribe to the list.  You can access previous messages via
 
 <p>
 <pre class="code-example">
-   (regexp-search '(w/ascii bos (* letter) eos) "English") =&gt; #&lt;rx-match&gt;
+   (regexp-search '(w/ascii bos (* letter) eos) "English") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(w/ascii bos (* letter) eos) "Ελληνική") =&gt; #f
 </pre>
 
@@ -867,8 +883,8 @@ subscribe to the list.  You can access previous messages via
 
 <p>
 <pre class="code-example">
-   (regexp-search '(w/unicode bos (* letter) eos) "English") =&gt; #&lt;rx-match&gt;
-   (regexp-search '(w/unicode bos (* letter) eos) "Ελληνική") =&gt; #&lt;rx-match&gt;
+   (regexp-search '(w/unicode bos (* letter) eos) "English") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(w/unicode bos (* letter) eos) "Ελληνική") =&gt; #&lt;regexp-match&gt;
 </pre>
 
 
@@ -883,8 +899,8 @@ subscribe to the list.  You can access previous messages via
 
 <p>
 <pre class="code-example">
-   (regexp-search '(: "match" (? "es") "!") "matches!") =&gt; #&lt;rx-match&gt;
-   (regexp-search '(: "match" (? "es") "!") "match!") =&gt; #&lt;rx-match&gt;
+   (regexp-search '(: "match" (? "es") "!") "matches!") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(: "match" (? "es") "!") "match!") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(: "match" (? "es") "!") "matche!") =&gt; #f
 </pre>
 
@@ -897,8 +913,8 @@ subscribe to the list.  You can access previous messages via
 
 <p>
 <pre class="code-example">
-   (regexp-search '(: "&lt;" (* (~ #\&gt;)) "&gt;") "&lt;html&gt;") =&gt; #&lt;rx-match&gt;
-   (regexp-search '(: "&lt;" (* (~ #\&gt;)) "&gt;") "&lt;&gt;") =&gt; #&lt;rx-match&gt;
+   (regexp-search '(: "&lt;" (* (~ #\&gt;)) "&gt;") "&lt;html&gt;") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(: "&lt;" (* (~ #\&gt;)) "&gt;") "&lt;&gt;") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(: "&lt;" (* (~ #\&gt;)) "&gt;") "&lt;html") =&gt; #f
 </pre>
 
@@ -911,8 +927,8 @@ subscribe to the list.  You can access previous messages via
 
 <p>
 <pre class="code-example">
-   (regexp-search '(: "&lt;" (+ (~ #\&gt;)) "&gt;") "&lt;html&gt;") =&gt; #&lt;rx-match&gt;
-   (regexp-search '(: "&lt;" (+ (~ #\&gt;)) "&gt;") "&lt;a&gt;") =&gt; #&lt;rx-match&gt;
+   (regexp-search '(: "&lt;" (+ (~ #\&gt;)) "&gt;") "&lt;html&gt;") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(: "&lt;" (+ (~ #\&gt;)) "&gt;") "&lt;a&gt;") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(: "&lt;" (+ (~ #\&gt;)) "&gt;") "&lt;&gt;") =&gt; #f
 </pre>
 
@@ -925,8 +941,8 @@ subscribe to the list.  You can access previous messages via
 
 <p>
 <pre class="code-example">
-   (regexp-search '(: "&lt;" (&gt;= 3 (~ #\&gt;)) "&gt;") "&lt;table&gt;") =&gt; #&lt;rx-match&gt;
-   (regexp-search '(: "&lt;" (&gt;= 3 (~ #\&gt;)) "&gt;") "&lt;pre&gt;") =&gt; #&lt;rx-match&gt;
+   (regexp-search '(: "&lt;" (&gt;= 3 (~ #\&gt;)) "&gt;") "&lt;table&gt;") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(: "&lt;" (&gt;= 3 (~ #\&gt;)) "&gt;") "&lt;pre&gt;") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(: "&lt;" (&gt;= 3 (~ #\&gt;)) "&gt;") "&lt;tr&gt;") =&gt; #f
 </pre>
 
@@ -939,7 +955,7 @@ subscribe to the list.  You can access previous messages via
 
 <p>
 <pre class="code-example">
-   (regexp-search '(: "&lt;" (= 4 (~ #\&gt;)) "&gt;") "&lt;html&gt;") =&gt; #&lt;rx-match&gt;
+   (regexp-search '(: "&lt;" (= 4 (~ #\&gt;)) "&gt;") "&lt;html&gt;") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(: "&lt;" (= 4 (~ #\&gt;)) "&gt;") "&lt;table&gt;") =&gt; #f
 </pre>
 
@@ -952,7 +968,7 @@ subscribe to the list.  You can access previous messages via
 
 <p>
 <pre class="code-example">
-   (regexp-search '(: (= 3 (** 1 3 numeric) ".") (** 1 3 numeric)) "192.168.1.10") =&gt; #&lt;rx-match&gt;
+   (regexp-search '(: (= 3 (** 1 3 numeric) ".") (** 1 3 numeric)) "192.168.1.10") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(: (= 3 (** 1 3 numeric) ".") (** 1 3 numeric)) "192.0168.1.10") =&gt; #f
 </pre>
 
@@ -967,7 +983,7 @@ subscribe to the list.  You can access previous messages via
 
 <p>
   A numbered submatch.  The contents matching the pattern
-  will be available in the resulting rx-match.
+  will be available in the resulting regexp-match.
 
 <p>
 <dt>(<a name="proc-submatch-named"><code class="proc-def">submatch-named</code></a> <var>name</var> <var>sre</var> <var>...</var>)
@@ -1005,8 +1021,8 @@ subscribe to the list.  You can access previous messages via
 
 <p>
 <pre class="code-example">
-   (regexp-match '(* #\-) "---") =&gt; #&lt;rx-match&gt;
-   (regexp-match '(* #\-) "-_-") =&gt; #f
+   (regexp-matches '(* #\-) "---") =&gt; #&lt;regexp-match&gt;
+   (regexp-matches '(* #\-) "-_-") =&gt; #f
 </pre>
 
 <p>
@@ -1036,16 +1052,15 @@ subscribe to the list.  You can access previous messages via
    =&gt; ("v" "o" "w" "e" "ls")
 </pre>
 
-<blockquote style="background:lightgray">
-  Rationale: Many useful character sets are likely to be available
-  as SRFI 14 <code>char-set</code>s, so it is desirable to want to
-  reuse them in regular expressions.  Since many Unicode character
-  sets are extremely large, converting back and forth between an
-  internal and external representation can be prohibitively expensive,
-  so the option of direct embedding is necessary.  When a readable
-  external representation is needed, <code>char-set-&gt;sre</code>
-  can be used.
-</blockquote>
+<blockquote style="background:lightgray"> Rationale: Many useful
+  character sets are likely to be available as SRFI 14
+  <code>char-set</code>s, so it is desirable to reuse them in regular
+  expressions.  Since many Unicode character sets are extremely large,
+  converting back and forth between an internal and external
+  representation can be prohibitively expensive, so the option of
+  direct embedding is necessary.  When a readable external
+  representation is needed, <code>char-set-&gt;sre</code> can be used.
+  </blockquote>
 
 <p>
 <dt>(<a name="proc-_3cstring_3e)"><code class="proc-def">&lt;string&gt;)</code></a> 
@@ -1056,8 +1071,8 @@ subscribe to the list.  You can access previous messages via
 
 <p>
 <pre class="code-example">
-   (regexp-match '(* ("aeiou")) "oui") =&gt; #&lt;rx-match&gt;
-   (regexp-match '(* ("aeiou")) "ouais") =&gt; #f
+   (regexp-matches '(* ("aeiou")) "oui") =&gt; #&lt;regexp-match&gt;
+   (regexp-matches '(* ("aeiou")) "ouais") =&gt; #f
 </pre>
 
 
@@ -1072,12 +1087,14 @@ subscribe to the list.  You can access previous messages via
 
 <p>
 <pre class="code-example">
-   (regexp-match '(* (/ "AZ09")) "R2D2") =&gt; #&lt;rx-match&gt;
-   (regexp-match '(* (/ "AZ09")) "C-3PO") =&gt; #f
+   (regexp-matches '(* (/ "AZ09")) "R2D2") =&gt; #&lt;regexp-match&gt;
+   (regexp-matches '(* (/ "AZ09")) "C-3PO") =&gt; #f
 </pre>
 
 
 <dt>(<a name="proc-or"><code class="proc-def">or</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)
+<dd class="proc-def"></dd>
+<dt>(<a name="proc-&amp;"><code class="proc-def">|\||</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)
 <dd class="proc-def"></dd>
 
 <p>
@@ -1099,8 +1116,8 @@ subscribe to the list.  You can access previous messages via
 
 <p>
 <pre class="code-example">
-   (regexp-match '(* (- (/ "az") ("aeiou"))) "xyzzy") =&gt; #&lt;rx-match&gt;
-   (regexp-match '(* (- (/ "az") ("aeiou"))) "vowels") =&gt; #f
+   (regexp-matches '(* (- (/ "az") ("aeiou"))) "xyzzy") =&gt; #&lt;regexp-match&gt;
+   (regexp-matches '(* (- (/ "az") ("aeiou"))) "vowels") =&gt; #f
 </pre>
 
 
@@ -1114,8 +1131,8 @@ subscribe to the list.  You can access previous messages via
 
 <p>
 <pre class="code-example">
-   (regexp-match '(* (&amp; (/ "az") (~ ("aeiou")))) "xyzzy") =&gt; #&lt;rx-match&gt;
-   (regexp-match '(* (&amp; (/ "az") (~ ("aeiou")))) "vowels") =&gt; #f
+   (regexp-matches '(* (&amp; (/ "az") (~ ("aeiou")))) "xyzzy") =&gt; #&lt;regexp-match&gt;
+   (regexp-matches '(* (&amp; (/ "az") (~ ("aeiou")))) "vowels") =&gt; #f
 </pre>
 
 
@@ -1126,14 +1143,14 @@ subscribe to the list.  You can access previous messages via
 <dd class="proc-def"></dd>
 
 <p>
-  Match any character.
+  Match any character, even Unicode characters when in an ASCII context.
 
 <p>
 <dt><a name="proc-nonl"><code class="proc-def">nonl</code></a> 
 <dd class="proc-def"></dd>
 
-<p>
-  Match any character other than <code>#\newline</code>.
+<p> Match any character other than <code>#\return</code> or
+  <code>#\newline</code>.
 
 <p>
 <dt><a name="proc-ascii"><code class="proc-def">ascii</code></a> 
@@ -1148,10 +1165,10 @@ subscribe to the list.  You can access previous messages via
 <dt><a name="proc-lower"><code class="proc-def">lower</code></a> 
 <dd class="proc-def"></dd>
 
-<p>
-  Matches any character for which <code>char-lower-case?</code> returns true.
-  In a Unicode context this corresponds to the Lowercase (Ll)
-  property.  In an ASCII context corresponds to <code>(/ "az")</code>.
+<p> Matches any character for which <code>char-lower-case?</code>
+  returns true.  In a Unicode context this corresponds to the
+  Lowercase (Ll + Other_Lowercase) property.  In an ASCII context
+  corresponds to <code>(/ "az")</code>.
 
 <p>
 <dt><a name="proc-upper-case"><code class="proc-def">upper-case</code></a> 
@@ -1159,10 +1176,10 @@ subscribe to the list.  You can access previous messages via
 <dt><a name="proc-upper"><code class="proc-def">upper</code></a> 
 <dd class="proc-def"></dd>
 
-<p>
-  Matches any character for which <code>char-upper-case?</code> returns true.
-  In a Unicode context this corresponds to the Uppercase (Lu)
-  property.  In an ASCII context corresponds to <code>(/ "AZ")</code>.
+<p> Matches any character for which <code>char-upper-case?</code>
+  returns true.  In a Unicode context this corresponds to the
+  Uppercase (Lu + Other_Uppercase) property.  In an ASCII context
+  corresponds to <code>(/ "AZ")</code>.
 
 <p>
 <dt><a name="proc-alphabetic"><code class="proc-def">alphabetic</code></a> 
@@ -1170,10 +1187,10 @@ subscribe to the list.  You can access previous messages via
 <dt><a name="proc-alpha"><code class="proc-def">alpha</code></a> 
 <dd class="proc-def"></dd>
 
-<p>
-  Matches any character for which <code>char-alphabetic?</code> returns true.
-  In a Unicode context this corresponds to the Alphabetic (L)
-  property.  In an ASCII context corresponds to <code>(w/nocase (/ "az"))</code>.
+<p> Matches any character for which <code>char-alphabetic?</code>
+  returns true.  In a Unicode context this corresponds to the
+  Alphabetic (L + Nl + Other_Alphabetic) property.  In an ASCII
+  context corresponds to <code>(w/nocase (/ "az"))</code>.
 
 <p>
 <dt><a name="proc-numeric"><code class="proc-def">numeric</code></a> 
@@ -1392,15 +1409,12 @@ subscribe to the list.  You can access previous messages via
 <dt><a name="proc-eog"><code class="proc-def">eog</code></a> 
 <dd class="proc-def"></dd>
 
-<p>
-  Matches at the beginning/end of a single grapheme cluster without
-  consuming any characters (a zero-width assertion).  A grapheme
-  cluster is defined in Unicode <a href="#ref-TR18">TR18</a> as a
-  single non-combining codepoint followed by zero or more combining
-  marks (characters with the Mark property, Mn, Mc, Me).  The string
-  is assumed to contain non-combining codepoints immediately before
-  the start and after the end.  These always succeed in an ASCII
-  context.
+<p> Matches at the beginning/end of a single extended grapheme cluster
+  without consuming any characters (a zero-width assertion).  Grapheme
+  cluster boundaries are defined in Unicode <a
+  href="#ref-TR29">TR29</a>.  The string is assumed to contain
+  non-combining codepoints immediately before the start and after the
+  end.  These always succeed in an ASCII context.
 
 <p>
 <dt><a name="proc-grapheme"><code class="proc-def">grapheme</code></a> 
@@ -1412,21 +1426,36 @@ subscribe to the list.  You can access previous messages via
   a base non-combining codepoint followed by zero or more combining
   marks.  In an ASCII context this is equivalent to <code>any</code>.
 
-<p>
-  Assuming <code>char-set:mark</code> contains all characters with the Mark
-  property, then this is equivalent to:
+<p> Assuming <code>char-set:mark</code> contains all characters with
+  the Extend or SpacingMark properties defined in TR29, and
+  <code>char-set:control</code>,
+  <code>char-set:regional-indicator</code> and
+  <code>char-set:hangul-*</code> are defined similarly, then the
+  following SRE can be used with <code>regexp-extract</code> to
+  extract all graphemes from a string:
 
 <p>
 <pre class="code-example">
-   `(: bog (~ ,char-set:mark) (* ,char-set:mark) eog)
+   `(or (: (* ,char-set:hangul-l)
+           (or ,char-set:hangul-lvt
+               (: (? ,char-set:hangul-lv) (* ,char-set:hangul-v)))
+           (* ,char-set:hangul-t))
+        (+ ,char-set:regional-indicator)
+        (: "\r\n")
+        (: (~ control ("\r\n"))
+           (+ ,char-set:mark))
+        control)
 </pre>
 
+<p> To correctly match just an individual grapheme, however, the
+  hangul matching needs to be expanded into alternate cases such that
+  at least one codepoint is consumed.
 
-<h3><a name="SRE_2dSyntax_Extended-Patterns">Extended Patterns</a></h3>
+<h3><a name="SRE_2dSyntax_Non-Greedy-Patterns">Non-Greedy Patterns</a></h3>
 
 <p>
   The following patterns are only supported if the feature
-  <code>regexp-extended</code> is provided.
+  <code>regexp-non-greedy</code> is provided.
 
 <p>
 <dt>(<a name="proc-_3f_3f"><code class="proc-def">??</code></a> <var>sre</var> <var>...</var>)
@@ -1451,6 +1480,12 @@ subscribe to the list.  You can access previous messages via
 <p>
   Non-greedy kleene star, matches <var>m</var> to <var>n</var> times, preferring the
   shorter match.
+
+<h3><a name="SRE_2dSyntax_Look-Around-Patterns">Look Around Patterns</a></h3>
+
+<p>
+  The following patterns are only supported if the feature
+  <code>regexp-look-around</code> is provided.
 
 <p>
 <dt>(<a name="proc-look-ahead"><code class="proc-def">look-ahead</code></a> <var>sre</var> <var>...</var>)
@@ -1484,27 +1519,6 @@ subscribe to the list.  You can access previous messages via
   Zero-width negative look-behind assertion.
 
 <p>
-<dt>(<a name="proc-atomic"><code class="proc-def">atomic</code></a> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
-
-<p>
-  For (?&gt;...) independent patterns.
-
-<p>
-<dt>(<a name="proc-if"><code class="proc-def">if</code></a> <var>test</var> <var>pass</var> <var>[fail]</var>)
-<dd class="proc-def"></dd>
-
-<p>
-  Conditional patterns.
-
-<p>
-<dt><a name="proc-commit"><code class="proc-def">commit</code></a> 
-<dd class="proc-def"></dd>
-
-<p>
-  Don't backtrack beyond this (i.e. cut).
-
-<p>
 
 <p>
 <h1><a name="Implementation">Implementation</a></h1>
@@ -1512,6 +1526,7 @@ subscribe to the list.  You can access previous messages via
 <p>
   A reference implementation in portable R7RS is available at
 <pre>
+    <a href="https://code.google.com/p/chibi-scheme/source/browse/lib/chibi/regexp.scm">https://code.google.com/p/chibi-scheme/source/browse/lib/chibi/regexp.sld</a>
     <a href="https://code.google.com/p/chibi-scheme/source/browse/lib/chibi/regexp.scm">https://code.google.com/p/chibi-scheme/source/browse/lib/chibi/regexp.scm</a>
 </pre>
   depending only on
@@ -1607,7 +1622,7 @@ subscribe to the list.  You can access previous messages via
 <dd>
 <pre class="biblio">
       Shiro Kawai, Gauche Scheme - Regular Expressions
-      <a href="http://practical-scheme.net/gauche/man/gauche-refe_49.html">http://practical-scheme.net/gauche/man/gauche-refe_49.html</a>
+      <a href="http://practical-scheme.net/gauche/man/?p=Regular+expressions">http://practical-scheme.net/gauche/man/?p=Regular+expressions</a>
 </pre>
 
 
