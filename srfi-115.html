@@ -83,6 +83,7 @@ subscribe to the list.  You can access previous messages via
       <li>Revised: <a href="http://srfi.schemers.org/cgi-bin/viewcvs.cgi/*checkout*/srfi/srfi-115/srfi-115.html?rev=1.2">2013/11/17</a></li>
       <li>Revised: <a href="http://srfi.schemers.org/cgi-bin/viewcvs.cgi/*checkout*/srfi/srfi-115/srfi-115.html?rev=1.3">2013/12/08</a></li>
       <li>Revised: <a href="http://srfi.schemers.org/cgi-bin/viewcvs.cgi/*checkout*/srfi/srfi-115/srfi-115.html?rev=1.4">2014/04/24</a></li>
+      <li>Revised: <a href="http://srfi.schemers.org/cgi-bin/viewcvs.cgi/*checkout*/srfi/srfi-115/srfi-115.html?rev=1.5">2014/05/19</a></li>
       <li>Draft: 2013/10/12-2013/12/12</li>
     </ul>
 
@@ -118,27 +119,6 @@ subscribe to the list.  You can access previous messages via
   expressions described using the SRE "Scheme Regular Expression"
   notation first introduced by <a href="#ref-SCSH">SCSH</a>, and
   extended heavily by <a href="#ref-IrRegex">IrRegex</a>.
-
-<p>
-
-<p>
-<h1><a name="Issues">Issues</a></h1>
-
-<p> Library-level features aren't supported in R7RS, though they have
-been <a href="http://trac.sacrideo.us/wg/wiki/LibraryDeclarationsCowan">proposed</a> for the large language.  This SRFI thus refers to features available
-"if the implementation supports library-level features."
-
-<p> The semantics of <code>(w/ascii any)</code> has been changed to
-<code>ascii</code>, and complement defined in terms of set difference
-from <code>any</code>.  Thus the complement of a char set under
-<code>w/ascii</code> is always ASCII.
-
-<p> The semantics of <code>w/nocase</code> have been clarified, and
-are worth reviewing.
-
-<p> There aren't enough examples.
-
-<p>
 
 <p>
 <h1><a name="Rationale">Rationale</a></h1>
@@ -182,8 +162,9 @@ are worth reviewing.
 Basic Patterns
 <a href="#proc-_3cstring_3e">&lt;string&gt;</a> <a href="#proc-seq">seq</a> <a href="#proc-_3a">:</a> <a href="#proc-or">or</a> <a href="#proc-_7c_5c_7c_7c">|</a>
 
-Case and Unicode
+Options
 <a href="#proc-w_2fnocase">w/nocase</a> <a href="#proc-w_2fcase">w/case</a> <a href="#proc-w_2fascii">w/ascii</a> <a href="#proc-w_2funicode">w/unicode</a>
+<a href="#proc-w_2fnocapture">w/nocapture</a>
 
 Repetition
 <a href="#proc-_3f">optional</a> <a href="#proc-_3f">?</a>     <a href="#proc-_2a">zero-or-more</a> <a href="#proc-_2a">*</a>
@@ -195,19 +176,19 @@ Submatches
 <a href="#proc-backref">backref</a>
 
 Character Sets
-<a href="#proc-_3cchar_3e">&lt;char&gt;</a> <a href="#proc-_3cstring_3e_29">(&lt;string&gt;)</a> <a href="#proc-_3cstring_3e_29">(char-set &lt;string&gt;)</a>
+<a href="#proc-_3cchar_3e">&lt;char&gt;</a> <a href="#proc-_28_3cstring_3e_29">(&lt;string&gt;)</a> <a href="#proc-char-set">char-set</a>
 <a href="#proc-_2f">char-range</a> <a href="#proc-_2f">/</a> <a href="#proc-union">or</a> <a href="#proc-union">|</a> <a href="#proc-and">and</a> <a href="#proc-_26">&amp;</a>
 <a href="#proc-_7e">complement</a> <a href="#proc-_7e">~</a> <a href="#proc--">difference</a> <a href="#proc--">-</a>
 
 Named Character Sets
-<a href="#proc-any">any</a> <a href="#proc-nonl">nonl</a> <a href="#proc-ascii">ascii</a>
-<a href="#proc-lower-case">lower-case</a>    <a href="#proc-lower">lower</a> <a href="#proc-upper-case">upper-case</a> <a href="#proc-upper">upper</a>
-<a href="#proc-alphabetic">alphabetic</a>    <a href="#proc-alpha">alpha</a> <a href="#proc-numeric">numeric</a> <a href="#proc-num">num</a>
-<a href="#proc-alphanumeric">alphanumeric</a>  <a href="#proc-alphanum">alphanum</a> <a href="#proc-alnum">alnum</a>
-<a href="#proc-punctuation">punctuation</a>   <a href="#proc-punct">punct</a> <a href="#proc-symbol">symbol</a>
-<a href="#proc-graphic">graphic</a> <a href="#proc-graph">graph</a> <a href="#proc-printing">printing</a> <a href="#proc-print">print</a>
-<a href="#proc-whitespace">whitespace</a>    <a href="#proc-white">white</a> <a href="#proc-space">space</a>
-<a href="#proc-control">control</a> <a href="#proc-cntrl">cntrl</a> <a href="#proc-hex-digit">hex-digit</a> <a href="#proc-xdigit">xdigit</a>
+<a href="#proc-any">any</a> <a href="#proc-nonl">nonl</a> <a href="#proc-ascii">ascii</a>   <a href="#proc-lower-case">lower-case</a> <a href="#proc-lower">lower</a>
+<a href="#proc-upper-case">upper-case</a> <a href="#proc-upper">upper</a> <a href="#proc-title-case">title-case</a> <a href="#proc-title">title</a>
+<a href="#proc-alphabetic">alphabetic</a>       <a href="#proc-alpha">alpha</a> <a href="#proc-numeric">numeric</a> <a href="#proc-num">num</a>
+<a href="#proc-alphanumeric">alphanumeric</a>     <a href="#proc-alphanum">alphanum</a> <a href="#proc-alnum">alnum</a>
+<a href="#proc-punctuation">punctuation</a>      <a href="#proc-punct">punct</a> <a href="#proc-symbol">symbol</a>
+<a href="#proc-graphic">graphic</a> <a href="#proc-graph">graph</a>    <a href="#proc-printing">printing</a> <a href="#proc-print">print</a>
+<a href="#proc-whitespace">whitespace</a>       <a href="#proc-white">white</a> <a href="#proc-space">space</a>
+<a href="#proc-control">control</a> <a href="#proc-cntrl">cntrl</a>    <a href="#proc-hex-digit">hex-digit</a> <a href="#proc-xdigit">xdigit</a>
 
 Boundary Checks
 <a href="#proc-bos">bos</a>  <a href="#proc-eos">eos</a>   <a href="#proc-bol">bol</a> <a href="#proc-eol">eol</a>
@@ -360,10 +341,10 @@ Look Around Patterns
 <dd class="proc-def"></dd>
 
 <p> Returns an SRE corresponding to the given regexp <var>re</var>.
-  The SRE will be equivalent to but not necessarily identical to the
-  SRE originally used to compile <var>re</var>.  Mutating the result
-  may invalidate <var>re</var>, causing unspecified results if
-  subsequently used for matching.
+  The SRE will be equivalent to (will match the same strings) but not
+  necessarily <code>equal?</code> to the SRE originally used to compile
+  <var>re</var>.  Mutating the result may invalidate <var>re</var>,
+  causing unspecified results if subsequently used for matching.
 
 <p>
 <dt>(<a name="proc-char-set-sre"><code class="proc-def">char-set-&gt;sre</code></a> <var>char-set</var>) => sre
@@ -544,10 +525,11 @@ Look Around Patterns
 <p> Returns the substring matched in <var>regexp-match</var>
   corresponding to <var>field</var>, either an integer or a symbol for
   a named submatch.  Index 0 refers to the entire match, index 1 to
-  the first lexicographic submatch, and so on.  If passed an integer
-  outside the range of matches, or a symbol which does not correspond
-  to a named submatch of the pattern, it is an error.  If the
-  corresponding submatch did not match, returns false.
+  the first lexicographic submatch, and so on.  If there are multiple
+  submatches with the same name, the first which matched is returned.
+  If passed an integer outside the range of matches, or a symbol which
+  does not correspond to a named submatch of the pattern, it is an
+  error.  If the corresponding submatch did not match, returns false.
 
 <p> The result of extracting a submatch after the original matched
 string has been mutated is unspecified.
@@ -617,6 +599,8 @@ string has been mutated is unspecified.
      | (w/unicode   &lt;sre&gt; ...)     ; Introduce a unicode context.
      | (w/ascii &lt;sre&gt; ...)         ; Introduce an ascii context.
 
+     | (w/nocapture &lt;sre&gt; ...)     ; Ignore all enclosed submatches.
+
      | bos                         ; Beginning of string.
      | eos                         ; End of string.
 
@@ -663,11 +647,11 @@ string has been mutated is unspecified.
      | (w/ascii &lt;cset-sre&gt; ...)
      | (w/unicode &lt;cset-sre&gt; ...)
      | any | nonl | ascii | lower-case | lower
-     | upper-case | upper | alphabetic | alpha
-     | numeric | num | alphanumeric | alphanum | alnum
-     | punctuation | punct | symbol | graphic | graph
-     | whitespace | white | space | printing | print
-     | control | cntrl | hex-digit | xdigit
+     | upper-case | upper | title-case | title
+     | alphabetic | alpha | alphanumeric | alphanum | alnum
+     | numeric | num | punctuation | punct | symbol
+     | graphic | graph | whitespace | white | space
+     | printing | print | control | cntrl | hex-digit | xdigit
 </pre>
 
 
@@ -726,37 +710,58 @@ string has been mutated is unspecified.
 
 <p> Enclosed <var>sres</var> are case-insensitive.  In a Unicode
   context character and string literals match with the default simple
-  Unicode case-insensitive matching, and character sets match if any
-  character in the set matches case-insensitively.  Implementations
-  may, but are not required to, handle variable length case
-  conversions, such as #\x00DF "ß" matching the two characters "SS".
+  Unicode case-insensitive matching.  Implementations may, but are not
+  required to, handle variable length case conversions, such as
+  #\x00DF "ß" matching the two characters "SS".
 
-  In an ASCII context only the 52 ASCII letters <code>(/ "a-zA-Z")</code>
-  match case-insensitively to each other.
-
-  Note case folding happens at the leaf level, for literal and named
-  character sets, as opposed to after the full character set
-  computation has been performed.  For example,
+  <p>Character sets match if any character in the set matches
+  case-insensitively to the input.  Conceptually each
+  <code>cset-sre</code> is expanded to contain all case variants for
+  all of its characters.  In a compound <code>cset-sre</code> the
+  expansion is applied at the terminals consisting of characters,
+  strings, embedded SRFI 14 char-sets, and named character sets.  For
+  simple unions this would be equivalent to computing the full union
+  first and then expanding case variants, but the semantics can differ
+  when differences and intersections are applied.  For example,
   <code>(w/nocase (~ ("Aab")))</code> is equivalent to
   <code>(~ ("AaBb"))</code>, for which "B" is clearly not a member.
-  However if you were to compute <code>(~ ("Aab"))</code> and then
-  case fold the result, "B" <strong>would</strong> be a member.
+  However if you were to compute <code>(~ ("Aab"))</code> first then
+  you would have a char-set containing "B", and after expanding case
+  variants both "B" and "b" would be members.
+
+  <p>In an ASCII context only the 52 ASCII letters <code>(/ "a-zA-Z")</code>
+  match case-insensitively to each other.
+
+  <p>In a Unicode context the only named <code>cset-sre</code> which
+  are affected by <code>w/nocase</code> are <code>upper</code> and
+  <code>lower</code>.  Note that the case insensitive versions of
+  these are not equivalent to <code>letter</code> as there are
+  characters with the letter property but no case.
 
 <p>
 <pre class="code-example">
+   (regexp-search "needle" "haynEEdlehay") =&gt; #f
    (regexp-search '(w/nocase "needle") "haynEEdlehay") =&gt; #&lt;regexp-match&gt;
+
+   (regexp-search '(~ ("Aab")) "B") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(~ ("Aab")) "b") =&gt; #f
+   (regexp-search '(w/nocase (~ ("Aab"))) "B") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(w/nocase (~ ("Aab"))) "b") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(~ (w/nocase ("Aab"))) "B") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(~ (w/nocase ("Aab"))) "b") =&gt; #&lt;regexp-match&gt;
 </pre>
 
 
 <dt>(<a name="proc-w_2fcase"><code class="proc-def">w/case</code></a> <var>sre</var> <var>...</var>)
 <dd class="proc-def"></dd>
 
-<p>
-  Enclosed <var>sres</var> are case-sensitive.  This is the default.
+<p> Enclosed <var>sres</var> are case-sensitive.  This is the default,
+  and overrides any encloding <code>w/nocase</code> setting.
 
 <p>
 <pre class="code-example">
    (regexp-search '(w/nocase "SMALL" (w/case "BIG")) "smallBIGsmall") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(w/nocase (~ (w/case ("Aab")))) "b") =&gt; #f
 </pre>
 
 
@@ -789,6 +794,32 @@ string has been mutated is unspecified.
 <pre class="code-example">
    (regexp-search '(w/unicode bos (* letter) eos) "English") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(w/unicode bos (* letter) eos) "Ελληνική") =&gt; #&lt;regexp-match&gt;
+</pre>
+
+
+<dt>(<a name="proc-w_2fnocapture"><code class="proc-def">w/nocapture</code></a> <var>sre</var> <var>...</var>)
+<dd class="proc-def"></dd>
+
+<p>
+  Disable capturing for all submatches
+  (<code>$</code>, <code>submatch</code>,
+  <code>-&gt;</code> and <code>submatch-named</code>) in the
+  enclosed <var>sres</var>.  The resulting SRE matches exactly the
+  same strings, but without any associated submatch info.  Useful for
+  utility SREs which you want to incorporate without affecting your
+  submatch positions.
+
+<p>
+<pre class="code-example">
+   (let ((number '($ (+ digit))))
+     (cdr
+      (regexp-match-&gt;list
+       (regexp-search `(: ,number "-" ,number "-" ,number)
+                      "555-867-5309")))  ; =&gt; '("555" "867" "5309")
+     (cdr
+      (regexp-match-&gt;list
+       (regexp-search `(: ,number "-" (w/nocapture ,number) "-" ,number)
+                      "555-867-5309"))))   =&gt; '("555" "5309")
 </pre>
 
 
@@ -978,18 +1009,28 @@ string has been mutated is unspecified.
   <code>char-set-&gt;sre</code> can be used.  </blockquote>
 
 <p>
-<dt>(<code class="proc-def">char-set &lt;string&gt;)</code>
+<dt><a name="proc-char-set"><code class="proc-def">(char-set &lt;string&gt;)</code></a>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-_3cstring_3e)"><code class="proc-def">&lt;string&gt;)</code></a> 
+<dt>(<a name="proc-_28_3cstring_3e_29"><code class="proc-def">&lt;string&gt;)</code></a> 
 <dd class="proc-def"></dd>
 
 <p>
-  The set of chars as formed by <code>(string-&gt;char-set <var>&lt;string&gt;</var>)</code>.
+  The set of chars as formed by SRFI 14 <code>(string-&gt;char-set <var>&lt;string&gt;</var>)</code>.
+
+<p>Note that char-sets contain code points, not grapheme clusters, so
+   any combining characters in <var>&lt;string&gt;</var> will be
+   inserted separately from any preceding base characters by
+   <code>string-&gt;char-set</code>.
 
 <p>
 <pre class="code-example">
    (regexp-matches '(* ("aeiou")) "oui") =&gt; #&lt;regexp-match&gt;
    (regexp-matches '(* ("aeiou")) "ouais") =&gt; #f
+   (regexp-matches '(* ("e\x0301")) "e\x0301") =&gt; #&lt;regexp-match&gt;
+   (regexp-matches '("e\x0301") "e\x0301") =&gt; #f
+   (regexp-matches '("e\x0301") "e") =&gt; #&lt;regexp-match&gt;
+   (regexp-matches '("e\x0301") "\x0301") =&gt; #&lt;regexp-match&gt;
+   (regexp-matches '("e\x0301") "\x00E9") =&gt; #f
 </pre>
 
 
@@ -1107,6 +1148,17 @@ string has been mutated is unspecified.
   returns true.  In a Unicode context this corresponds to the
   Uppercase (Lu + Other_Uppercase) property.  In an ASCII context
   corresponds to <code>(/ "AZ")</code>.
+
+<p>
+<dt><a name="proc-title-case"><code class="proc-def">title-case</code></a> 
+<dd class="proc-def"></dd>
+<dt><a name="proc-title"><code class="proc-def">title</code></a> 
+<dd class="proc-def"></dd>
+
+<p> Matches any character with the Unicode Titlecase (Lt) property.
+  This property only exists for the sake of ligature characters, of
+  which only 31 exist at time of writing.  In an ASCII context this is
+  empty.
 
 <p>
 <dt><a name="proc-alphabetic"><code class="proc-def">alphabetic</code></a> 
@@ -1290,12 +1342,22 @@ string has been mutated is unspecified.
   characters appear immediately before the beginning or after the end.
 
 <p>
+<pre class="code-example">
+  (regexp-search '(: bow "foo") "foo") =&gt; #&lt;regexp-match&gt;
+  (regexp-search '(: bow "foo") "<foo>") =&gt; #&lt;regexp-match&gt;
+  (regexp-search '(: bow "foo") "snafoo") =&gt; #f
+  (regexp-search '(: "foo" eow) "foo") =&gt; #&lt;regexp-match&gt;
+  (regexp-search '(: "foo" eow) "foo!") =&gt; #&lt;regexp-match&gt;
+  (regexp-search '(: "foo" eow) "foobar") =&gt; #f
+</pre>
+
+<p>
 <dt><a name="proc-nwb"><code class="proc-def">nwb</code></a> 
 <dd class="proc-def"></dd>
 
 <p>
   Matches a non-word-boundary (i.e. \B in PCRE).  Equivalent to
-  (neg-look-ahead (or bow eow)).
+  <code>(neg-look-ahead (or bow eow))</code>.
 
 <p>
 <dt>(<a name="proc-word"><code class="proc-def">word</code></a> <var>sre</var> <var>...</var>)
@@ -1532,7 +1594,7 @@ string has been mutated is unspecified.
 <dd>
 <pre class="biblio">
       Marc Feeley, Feature-based conditional expansion construct
-      <a href="http://srfi.schemers.org/srfi-0/srfi-0.html">http://srfi.schemers.org/srfi-14/srfi-14.html</a>
+      <a href="http://srfi.schemers.org/srfi-0/srfi-0.html">http://srfi.schemers.org/srfi-0/srfi-0.html</a>
 </pre>
 
 <dt class="biblio"><a name="ref-SRFI-14"><strong>SRFI 14</strong></a>
