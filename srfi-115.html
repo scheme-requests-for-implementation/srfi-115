@@ -16,7 +16,7 @@ Alex Shinn
 
 <H1>Status</H1>
 
-This SRFI is currently in ``draft'' status.
+This SRFI is currently in ``final'' status.
 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="keywords" content="Scheme, regular expressions, programming language, SRFI">
@@ -64,7 +64,7 @@ var {
   Alex Shinn
 
 <p>
-This SRFI is currently in ``draft'' status.
+This SRFI is currently in ``final'' status.
 
 To see an explanation of
 each status that a SRFI can hold, see <a
@@ -76,6 +76,10 @@ To provide input on this SRFI, please
 <a href="../srfi-list-subscribe.html">instructions here</a> to
 subscribe to the list.  You can access previous messages via
 <a href="mail-archive/maillist.html">the archive of the mailing list</a>.
+You can access
+post-finalization messages via
+<a href="http://srfi.schemers.org/srfi-115/post-mail-archive/maillist.html">
+the archive of the mailing list</a>.
 </p>
 
 <ul>
@@ -85,6 +89,7 @@ subscribe to the list.  You can access previous messages via
       <li>Revised: <a href="http://srfi.schemers.org/cgi-bin/viewcvs.cgi/*checkout*/srfi/srfi-115/srfi-115.html?rev=1.4">2014/04/24</a></li>
       <li>Revised: <a href="http://srfi.schemers.org/cgi-bin/viewcvs.cgi/*checkout*/srfi/srfi-115/srfi-115.html?rev=1.5">2014/05/19</a></li>
       <li>Revised: <a href="http://srfi.schemers.org/cgi-bin/viewcvs.cgi/*checkout*/srfi/srfi-115/srfi-115.html?rev=1.6">2014/06/03</a></li>
+      <li>Final: <a href="http://srfi.schemers.org/cgi-bin/viewcvs.cgi/*checkout*/srfi/srfi-115/srfi-115.html?rev=1.7">2014/07/14</a></li>
       <li>Draft: 2013/10/12-2013/12/12</li>
     </ul>
 
@@ -650,11 +655,17 @@ string has been mutated is unspecified.
      | &lt;string&gt;                    ; A literal string match.
      | &lt;cset-sre&gt;                  ; A character set match.
      | (* &lt;sre&gt; ...)               ; 0 or more matches.
+     | (zero-or-more &lt;sre&gt; ...)
      | (+ &lt;sre&gt; ...)               ; 1 or more matches.
+     | (one-or-more &lt;sre&gt; ...)
      | (? &lt;sre&gt; ...)               ; 0 or 1 matches.
+     | (optional &lt;sre&gt; ...)
      | (= &lt;n&gt; &lt;sre&gt; ...)           ; &lt;n&gt; matches.
+     | (exactly &lt;n&gt; &lt;sre&gt; ...)
      | (&gt;= &lt;n&gt; &lt;sre&gt; ...)          ; &lt;n&gt; or more matches.
+     | (at-least &lt;n&gt; &lt;sre&gt; ...)
      | (** &lt;n&gt; &lt;m&gt; &lt;sre&gt; ...)      ; &lt;n&gt; to &lt;m&gt; matches.
+     | (repeated &lt;n&gt; &lt;m&gt; &lt;sre&gt; ...)
 
      | (|  &lt;sre&gt; ...)              ; Alternation.
      | (or &lt;sre&gt; ...)
@@ -691,13 +702,18 @@ string has been mutated is unspecified.
      | (word+ &lt;cset-sre&gt; ...)      ; A single word restricted to a cset.
      | word                        ; A single word.
 
-     | (?? sre ...)                ; A non-greedy pattern, 0 or 1 match.
-     | (*? sre ...)                ; Non-greedy 0 or more matches.
-     | (**? m n sre ...)           ; Non-greedy &lt;m&gt; to &lt;n&gt; matches.
-     | (look-ahead sre ...)        ; Zero-width look-ahead assertion.
-     | (look-behind sre ...)       ; Zero-width look-behind assertion.
-     | (neg-look-ahead sre ...)    ; Zero-width negative look-ahead assertion.
-     | (neg-look-behind sre ...)   ; Zero-width negative look-behind assertion.
+     | (?? &lt;sre&gt; ...)              ; A non-greedy pattern, 0 or 1 match.
+     | (non-greedy-optional &lt;sre&gt; ...)
+     | (*? &lt;sre&gt; ...)              ; Non-greedy 0 or more matches.
+     | (non-greedy-zero-or-more &lt;sre&gt; ...)
+     | (**? &lt;m&gt; &lt;n&gt; &lt;sre&gt; ...)     ; Non-greedy &lt;m&gt; to &lt;n&gt; matches.
+     | (non-greedy-repeated &lt;sre&gt; ...)
+     | (look-ahead &lt;sre&gt; ...)      ; Zero-width look-ahead assertion.
+     | (look-behind &lt;sre&gt; ...)     ; Zero-width look-behind assertion.
+     | (neg-look-ahead &lt;sre&gt; ...)  ; Zero-width negative look-ahead assertion.
+     | (neg-look-behind &lt;sre&gt; ...) ; Zero-width negative look-behind assertion.
+
+     | (backref &lt;n-or-name&gt;)       ; Match a previous submatch.
 </pre>
 
 
@@ -710,11 +726,15 @@ string has been mutated is unspecified.
      | "&lt;char&gt;"                    ; string of one char
      | &lt;char-set&gt;                  ; embedded SRFI 14 char set
      | (&lt;string&gt;)                  ; literal char set
+     | (char-set &lt;string&gt;)
      | (/ &lt;range-spec&gt; ...)        ; ranges
+     | (char-range &lt;range-spec&gt; ...)
      | (or &lt;cset-sre&gt; ...)         ; union
      | (and &lt;cset-sre&gt; ...)        ; intersection
      | (- &lt;cset-sre&gt; ...)          ; difference
+     | (- &lt;difference&gt; ...)
      | (~ &lt;cset-sre&gt; ...)          ; complement of union
+     | (complement &lt;cset-sre&gt; ...)
      | (w/case &lt;cset-sre&gt; ...)     ; case and unicode toggling
      | (w/nocase &lt;cset-sre&gt; ...)
      | (w/ascii &lt;cset-sre&gt; ...)
@@ -1717,8 +1737,6 @@ string has been mutated is unspecified.
       <a href="http://www.pcre.org/">http://www.pcre.org/</a>
 </pre>
 </dl>
-
-<h1>Copyright</h1>
 
 <h1>Copyright</h1>
 
