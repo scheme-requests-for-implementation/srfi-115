@@ -730,7 +730,9 @@ string has been mutated is unspecified.
      | (/ &lt;range-spec&gt; ...)        ; ranges
      | (char-range &lt;range-spec&gt; ...)
      | (or &lt;cset-sre&gt; ...)         ; union
+     | (|\|| &lt;cset-sre&gt; ...)
      | (and &lt;cset-sre&gt; ...)        ; intersection
+     | (&amp; &lt;cset-sre&gt; ...)
      | (- &lt;cset-sre&gt; ...)          ; difference
      | (- &lt;difference&gt; ...)
      | (~ &lt;cset-sre&gt; ...)          ; complement of union
@@ -828,7 +830,7 @@ string has been mutated is unspecified.
   <p>In a Unicode context the only named <code>cset-sre</code> which
   are affected by <code>w/nocase</code> are <code>upper</code> and
   <code>lower</code>.  Note that the case insensitive versions of
-  these are not equivalent to <code>letter</code> as there are
+  these are not equivalent to <code>alpha</code> as there are
   characters with the letter property but no case.
 
 <p>
@@ -838,10 +840,10 @@ string has been mutated is unspecified.
 
    (regexp-search '(~ ("Aab")) "B") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(~ ("Aab")) "b") =&gt; #f
-   (regexp-search '(w/nocase (~ ("Aab"))) "B") =&gt; #&lt;regexp-match&gt;
-   (regexp-search '(w/nocase (~ ("Aab"))) "b") =&gt; #&lt;regexp-match&gt;
-   (regexp-search '(~ (w/nocase ("Aab"))) "B") =&gt; #&lt;regexp-match&gt;
-   (regexp-search '(~ (w/nocase ("Aab"))) "b") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(w/nocase (~ ("Aab"))) "B") =&gt; #f
+   (regexp-search '(w/nocase (~ ("Aab"))) "b") =&gt; #f
+   (regexp-search '(~ (w/nocase ("Aab"))) "B") =&gt; #f
+   (regexp-search '(~ (w/nocase ("Aab"))) "b") =&gt; #f
 </pre>
 
 
@@ -869,8 +871,8 @@ string has been mutated is unspecified.
 
 <p>
 <pre class="code-example">
-   (regexp-search '(w/ascii bos (* letter) eos) "English") =&gt; #&lt;regexp-match&gt;
-   (regexp-search '(w/ascii bos (* letter) eos) "Ελληνική") =&gt; #f
+   (regexp-search '(w/ascii bos (* alpha) eos) "English") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(w/ascii bos (* alpha) eos) "Ελληνική") =&gt; #f
 </pre>
 
 
@@ -885,8 +887,8 @@ string has been mutated is unspecified.
 
 <p>
 <pre class="code-example">
-   (regexp-search '(w/unicode bos (* letter) eos) "English") =&gt; #&lt;regexp-match&gt;
-   (regexp-search '(w/unicode bos (* letter) eos) "Ελληνική") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(w/unicode bos (* alpha) eos) "English") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(w/unicode bos (* alpha) eos) "Ελληνική") =&gt; #&lt;regexp-match&gt;
 </pre>
 
 
@@ -1437,7 +1439,7 @@ string has been mutated is unspecified.
 <p>
 <pre class="code-example">
   (regexp-search '(: bow "foo") "foo") =&gt; #&lt;regexp-match&gt;
-  (regexp-search '(: bow "foo") "<foo>") =&gt; #&lt;regexp-match&gt;
+  (regexp-search '(: bow "foo") "&lt;foo&gt;>") =&gt; #&lt;regexp-match&gt;
   (regexp-search '(: bow "foo") "snafoo") =&gt; #f
   (regexp-search '(: "foo" eow) "foo") =&gt; #&lt;regexp-match&gt;
   (regexp-search '(: "foo" eow) "foo!") =&gt; #&lt;regexp-match&gt;
