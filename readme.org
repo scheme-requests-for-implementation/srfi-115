@@ -1,0 +1,16 @@
+* SRFI 115: Scheme Regular Expressions
+
+** by Alex Shinn
+
+This repository hosts [[http://srfi.schemers.org/srfi-115/][SRFI 115]]: Scheme Regular Expressions, a [[http://srfi.schemers.org/][Scheme Request for Implementation]].
+
+This SRFI is in /final/ status.
+
+The full documentation for this SRFI can be found in the [[http://srfi.schemers.org/srfi-115/srfi-115.html][SRFI Document]].
+
+If you'd like to participate in the discussion of this SRFI, or report issues with it, please [[http://srfi.schemers.org/srfi-115/][join the SRFI-115 mailing list]] and send your message there.
+
+Thank you.
+
+
+[[mailto:srfi-editors@srfi.schemers.org][The SRFI Editors]]
