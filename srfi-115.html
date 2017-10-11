@@ -459,12 +459,16 @@ Look Around Patterns
 <dd class="proc-def"></dd>
 
 <p>
-  Splits <var>str</var> into a list of strings separated by matches of <var>re</var>.
+  Splits <var>str</var> into a list of (possibly empty) strings separated by non-empty matches of <var>re</var>.
 
 <p>
 <pre class="code-example">
    (regexp-split '(+ space) " fee fi  fo\tfum\n")
    =&gt; ("fee" "fi" "fo" "fum")
+   (regexp-split '(",;") "a,,b,")
+   =&gt; ("a" "" "b" "")
+   (regexp-split '(* digit) "abc123def456ghi789")
+   =&gt; ("abc" "def" "ghi" "")
 </pre>
 
 
@@ -490,6 +494,8 @@ Look Around Patterns
    =&gt; ("Hello" ", " "world" "!\n")
    (regexp-partition '(+ (or space punct)) "¿Dónde Estás?")
    =&gt; ("" "¿" "Dónde" " " "Estás" "?")
+   (regexp-partition '(* digit) "abc123def456ghi789")
+   =&gt; ("abc" "123" "def" "456" "ghi" "789")
 </pre>
 
 
@@ -1625,10 +1631,11 @@ string has been mutated is unspecified.
 <p>
   A reference implementation in portable R7RS is available at
 <pre>
-    <a href="https://code.google.com/p/chibi-scheme/source/browse/lib/chibi/regexp.scm">https://code.google.com/p/chibi-scheme/source/browse/lib/chibi/regexp.sld</a>
-    <a href="https://code.google.com/p/chibi-scheme/source/browse/lib/chibi/regexp.scm">https://code.google.com/p/chibi-scheme/source/browse/lib/chibi/regexp.scm</a>
-    <a href="https://code.google.com/p/chibi-scheme/source/browse/lib/chibi/char-set/boundary.sld">https://code.google.com/p/chibi-scheme/source/browse/lib/chibi/char-set/boundary.sld</a>
-    <a href="https://code.google.com/p/chibi-scheme/source/browse/lib/chibi/char-set/boundary.scm">https://code.google.com/p/chibi-scheme/source/browse/lib/chibi/char-set/boundary.scm</a>
+    <a href="https://github.com/ashinn/chibi-scheme/blob/master/lib/srfi/115.sld">https://github.com/ashinn/chibi-scheme/blob/master/lib/srfi/115.sld</a>
+    <a href="https://github.com/ashinn/chibi-scheme/blob/master/lib/chibi/regexp.sld">https://github.com/ashinn/chibi-scheme/blob/master/lib/chibi/regexp.sld</a>
+    <a href="https://github.com/ashinn/chibi-scheme/blob/master/lib/chibi/regexp.scm">https://github.com/ashinn/chibi-scheme/blob/master/lib/chibi/regexp.scm</a>
+    <a href="https://github.com/ashinn/chibi-scheme/blob/master/lib/chibi/boundary.sld">https://github.com/ashinn/chibi-scheme/blob/master/lib/chibi/char-set/boundary.sld</a>
+    <a href="https://github.com/ashinn/chibi-scheme/blob/master/lib/chibi/boundary.scm">https://github.com/ashinn/chibi-scheme/blob/master/lib/chibi/char-set/boundary.scm</a>
 </pre>
   depending only on
   <a href="http://srfi.schemers.org/srfi-14/srfi-14.html">SRFI 14</a>,
@@ -1638,7 +1645,10 @@ string has been mutated is unspecified.
   discussion of which can be found at Russ Cox's
   <a href="#ref-ImplementingRegexps">Implementing Regexps</a>.
   At time of writing the implementation supports full unicode, but
-  does not yet support non-greedy or look-around patterns.
+  does not yet support look-around patterns.  See
+  <a href="#ref-IrRegex">IrRegex</a> for an alternate implementation
+  supporting all features, providing both a backtracking algorithm
+  and DFA compilation.
 
 <p>
 
