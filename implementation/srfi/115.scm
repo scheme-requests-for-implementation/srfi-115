@@ -582,7 +582,7 @@
       ((title-case title)
        (if (flag-set? flags ~ci?) %char-set:letter (char-set)))
       ((alphabetic alpha) %char-set:letter)
-      ((numeric num digit) %char-set:digit)
+      ((numeric num) %char-set:digit)
       ((alphanumeric alphanum alnum) %char-set:letter+digit)
       ((punctuation punct) %char-set:punctuation)
       ((symbol) %char-set:symbol)
@@ -631,9 +631,6 @@
       (lp (cons (car ls) (append (string->list (cadr ls)) (cddr ls))) res))
      (else
       (lp (cddr ls) (cons (cons (car ls) (cadr ls)) res))))))
-
-(define (every pred ls)
-  (or (null? ls) (and (pred (car ls)) (every pred (cdr ls)))))
 
 (define (char-set-sre? sre)
   (or (char? sre)
@@ -864,7 +861,7 @@
          (->rx (sre-expand-reps (cadr sre) (car (cddr sre))
                                 (cons 'seq (cdr (cddr sre))))
                flags next))
-        ((-> => submatch-named)
+        ((-> submatch-named)
          ;; Named submatches just record the name for the current
          ;; match and rewrite as a non-named submatch.
          (cond
@@ -874,13 +871,6 @@
            (set! match-names
                  (cons (cons (cadr sre) (+ 1 current-match)) match-names))
            (->rx (cons 'submatch (cddr sre)) flags next))))
-        ((*-> *=> submatch-named-list)
-         (cond
-          ((flag-set? flags ~nocapture?)
-           (->rx (cons 'seq (cddr sre)) flags next))
-          (else
-           (set! match-names (cons (cons (cadr sre) current-match) match-names))
-           (->rx (cons 'submatch-list (cddr sre)) flags next))))
         (($ submatch)
          ;; A submatch wraps next with an epsilon transition before
          ;; next, setting the start and end index on the result and
@@ -895,23 +885,6 @@
              (set! current-index (+ current-index 2))
              (set! match-rules `((,index . ,(+ index 1)) ,@match-rules))
              (make-submatch-state (cons 'seq (cdr sre)) flags next index)))))
-        ((*$ submatch-list)
-         ;; A submatch-list wraps a range of submatch results into a
-         ;; single match value.
-         (cond
-          ((flag-set? flags ~nocapture?)
-           (->rx (cons 'seq (cdr sre)) flags next))
-          (else
-           (let* ((num current-match)
-                  (index current-index))
-             (set! current-match (+ current-match 1))
-             (set! current-index (+ current-index 1))
-             (set! match-rules `(,index ,@match-rules))
-             (let* ((n2 (make-epsilon-state next (next-id)))
-                    (n1 (->rx (cons 'submatch (cdr sre)) flags n2)))
-               (state-match-set! n2 (list index num current-match))
-               (state-match-rule-set! n2 'list)
-               n1)))))
         ((~ - & / complement difference and char-range char-set)
          (make-char-state (sre->char-set sre flags) ~none next (next-id)))
         ((word)

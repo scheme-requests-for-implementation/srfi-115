@@ -6,7 +6,7 @@
 ;;> \hyperlink["http://unicode.org/reports/tr29/"]{TR29} word
 ;;> boundaries.
 
-(define-library (chibi char-set boundary)
+(define-library (srfi 115 boundary)
   (cond-expand
    (chibi (import (chibi)))
    (else (import (scheme base))))
