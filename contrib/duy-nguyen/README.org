@@ -1,0 +1,16 @@
+This is from ~(chibi regexp)~, renamed to ~(srfi 115)~ and made sure
+only srfi symbols are exported. ~(chibi char-set boundary)~ becomes
+~(srfi 115 boundary)~.
+
+Some chibi-specific SRE syntaxes such as ~digit~, ~=>~, ~*->~, ~*=>~,
+and ~*$~ are also removed.  PCRE tests are removed.
+~regexp-match->sexp~ is replaced with ~regexp-match->list~ in tests
+because the former is not part of ~(srfi 115)~.  Unicode tests
+~cond-expand~ed (because Gerbil does not support it)
+
+~115.sld~ now also supports SRFI 130, which is available in quite many
+schemes (and more optimal in Gauche).
+
+~(chibi test)~ is only needed for running the test suites.
+
+Tested with Gauche, Chibi, Larceny, Sagittarius and Gerbil.
