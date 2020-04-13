@@ -81,9 +81,21 @@ var {
 	<ul>
 	  <li>2015-08-24 (Fix examples, grammar, etc.)</li>
 	  <li>2015-10-11 (Add clarifications and more examples.
-	    Update location of reference implementation.)</li>
+	    Update location of sample implementation.)</li>
 	  <li>2018-09-18 (Fix typo in sample grapheme definition.)</li></ul></li>
-    </ul>
+      <li>
+	<b>Post-finalization note</b>: In <code>regexp-replace</code> and
+	<code>regexp-replace-all</code>, the <code>subst</code> is
+	defined to be a string, integer or symbol.  However, the
+	sample implementation as well as equivalent procedures in
+	IrRegex and SCSH also allow a list of any of these, with the
+	results concatenated.  In addition, the sample implementation
+	accepts a procedure of one argument, which is applied to the
+	corresponding <code>regexp-match</code> object to obtain
+	the substituted string (as in Emacs <code>regexp-replace-in-string</code>).
+	This can be used to avoid the ambiguity whereby <code>'pre</code> and
+	<code>'post</code> have predefined meanings and can't refer to submatch
+	names.  Implementors are encouraged to support these two extensions.</li></ul>
 
 <p>
 <h1>Table of Contents</h1>
@@ -1617,7 +1629,7 @@ string has been mutated is unspecified.
 <h1><a name="Implementation">Implementation</a></h1>
 
 <p>
-  A reference implementation in portable R7RS is available at
+  A sample implementation in portable R7RS is available at
 <pre>
     <a href="https://github.com/ashinn/chibi-scheme/blob/master/lib/srfi/115.sld">https://github.com/ashinn/chibi-scheme/blob/master/lib/srfi/115.sld</a>
     <a href="https://github.com/ashinn/chibi-scheme/blob/master/lib/chibi/regexp.sld">https://github.com/ashinn/chibi-scheme/blob/master/lib/chibi/regexp.sld</a>
