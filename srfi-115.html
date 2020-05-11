@@ -82,7 +82,8 @@ var {
 	  <li>2015-08-24 (Fix examples, grammar, etc.)</li>
 	  <li>2015-10-11 (Add clarifications and more examples.
 	    Update location of sample implementation.)</li>
-	  <li>2018-09-18 (Fix typo in sample grapheme definition.)</li></ul></li>
+	  <li>2018-09-18 (Fix typo in sample grapheme definition.)</li>
+	  <li>2020-05-11 (Errata in regexp-split example.)</li></ul></li>
       <li>
 	<b>Post-finalization note</b>: In <code>regexp-replace</code> and
 	<code>regexp-replace-all</code>, the <code>subst</code> is
@@ -464,7 +465,7 @@ Look Around Patterns
 <p>
 <pre class="code-example">
    (regexp-split '(+ space) " fee fi  fo\tfum\n")
-   =&gt; ("fee" "fi" "fo" "fum")
+   =&gt; ("" "fee" "fi" "fo" "fum" "")
    (regexp-split '(",;") "a,,b,")
    =&gt; ("a" "" "b" "")
    (regexp-split '(* digit) "abc123def456ghi789")
@@ -485,6 +486,11 @@ Look Around Patterns
   string, no trailing empty string will be included.  Thus, in the
   degenerate case where <var>str</var> is the empty string, the result is
   <code>("")</code>.
+
+<p>
+  Note that <code>regexp-partition</code> is equivalent to
+  interleaving the results of <code>regexp-split</code> and
+  <code>regexp-extract</code>, starting with the former.
 
 <p>
 <pre class="code-example">
