@@ -4,7 +4,7 @@
 
 
 
-keywords: [[https://srfi.schemers.org/?keywords=data-structure][Data Structure]]
+keywords: [[https://srfi.schemers.org/?keywords=data-structure][Data Structure]], [[https://srfi.schemers.org/?keywords=r7rs-large-tangerine][R7RS Large, Tangerine Edition]]
 
 This repository hosts [[https://srfi.schemers.org/srfi-115/][SRFI 115]]: Scheme Regular Expressions, a [[https://srfi.schemers.org/][Scheme Request for Implementation]].
 
