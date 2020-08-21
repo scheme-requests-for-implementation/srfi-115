@@ -83,7 +83,13 @@ var {
 	  <li>2015-10-11 (Add clarifications and more examples.
 	    Update location of sample implementation.)</li>
 	  <li>2018-09-18 (Fix typo in sample grapheme definition.)</li>
-	  <li>2020-05-11 (Fix error in <code>regexp-split</code> example.)</li></ul></li>
+	  <li>2020-05-11 (Fix error in <code>regexp-split</code> example.)</li>
+	  <li>2020-08-21 (Fix code for handling regional indicator
+	    characters to account for a fix to Unicode TR29 itself.
+	    See <a
+		  href="https://www.unicode.org/mail-arch/unicode-ml/y2017-m12/0045.html">Unicode.org
+	    message</a> and <a href="https://srfi-email.schemers.org/srfi-115/msg/15038927/">Alex's
+	    SRFI message</a>.)</li>
       <li>
 	<b>Post-finalization note</b>: In <code>regexp-replace</code> and
 	<code>regexp-replace-all</code>, the <code>subst</code> is
@@ -1543,7 +1549,7 @@ string has been mutated is unspecified.
            (* ,char-set:hangul-t))
         (+ ,char-set:hangul-l)
         (+ ,char-set:hangul-t)
-        (+ ,char-set:regional-indicator)
+        (= 2 ,char-set:regional-indicator)
         (: "\r\n")
         (: (~ control ("\r\n"))
            (* ,char-set:mark))
