@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2014 Alex Shinn
+#
+# SPDX-License-Identifier: MIT
+
 * SRFI 115: Scheme Regular Expressions
 
 ** by Alex Shinn

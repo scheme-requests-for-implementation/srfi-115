@@ -1,3 +1,7 @@
+;;;; SPDX-FileCopyrightText: 2013 - 2016 Alex Shinn
+;;;;
+;;;; SPDX-License-Identifier: BSD-3-Clause
+
 (define-library (srfi 115)
   (export regexp regexp? valid-sre? rx regexp->sre char-set->sre
           regexp-matches regexp-matches? regexp-search

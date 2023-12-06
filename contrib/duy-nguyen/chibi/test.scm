@@ -1,5 +1,6 @@
-;; Copyright (c) 2010-2014 Alex Shinn. All rights reserved. 
-;; BSD-style license: http://synthcode.com/license.txt
+;;;; SPDX-FileCopyrightText: 2010 - 2014 Alex Shinn
+;;;;
+;;;; SPDX-License-Identifier: BSD-3-Clause
 
 ;;> Simple testing framework adapted from the Chicken \scheme{test}
 ;;> module.

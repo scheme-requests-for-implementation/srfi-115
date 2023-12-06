@@ -1,3 +1,7 @@
+;;;; SPDX-FileCopyrightText: 2015 Alex Shinn
+;;;;
+;;;; SPDX-License-Identifier: CC0-1.0
+
 ;; Character sets for Unicode boundaries, TR29.
 ;; This code is written by Alex Shinn and placed in the
 ;; Public Domain.  All warranties are disclaimed.

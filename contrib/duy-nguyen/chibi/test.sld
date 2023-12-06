@@ -1,3 +1,6 @@
+;;;; SPDX-FileCopyrightText: 2010 - 2014 Alex Shinn
+;;;;
+;;;; SPDX-License-Identifier: BSD-3-Clause
 
 (define-library (chibi test)
   (export

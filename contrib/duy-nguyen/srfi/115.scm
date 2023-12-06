@@ -1,6 +1,8 @@
+;;;; SPDX-FileCopyrightText: 2013 - 2016 Alex Shinn
+;;;;
+;;;; SPDX-License-Identifier: BSD-3-Clause
+
 ;; regexp.scm -- simple non-bactracking NFA implementation
-;; Copyright (c) 2013-2016 Alex Shinn.  All rights reserved.
-;; BSD-style license: http://synthcode.com/license.txt
 
 ;;; An rx represents a start state and meta-info such as the number
 ;;; and names of submatches.

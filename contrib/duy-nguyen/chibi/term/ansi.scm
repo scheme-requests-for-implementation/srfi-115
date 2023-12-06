@@ -1,5 +1,6 @@
-;; Copyright (c) 2010-2014 Alex Shinn. All rights reserved. BSD-style
-;; license: http://synthcode.com/license.txt
+;;;; SPDX-FileCopyrightText: 2010 - 2014 Alex Shinn
+;;;;
+;;;; SPDX-License-Identifier: BSD-3-Clause
 
 ;;> A library to use ANSI escape codes to format text and background
 ;;> color, font weigh, and underlining.

@@ -1,1 +1,5 @@
+;;;; SPDX-FileCopyrightText: 2020 Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+;;;;
+;;;; SPDX-License-Identifier: MIT
+
 (prelude: :scheme/r7rs)
