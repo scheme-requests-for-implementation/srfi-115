@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
-  'http://www.w3.org/TR/REC-html40/strict.dtd'>
+<!DOCTYPE html>
 <html lang=en-US>
   <head>
 <!-- This commented out text is for the brittle SRFI tools -->
@@ -35,14 +34,14 @@ td {
    padding-right: 20px;
 }
 code.proc-def {
-   font-style: bold;
+   font-weight: bold;
    color: rgb(120,0,120);
 }
 .code-example {
    background-color: beige;
 }
 var {
-   font-style: bold;
+   font-weight: bold;
    color: rgb(20,20,120);
 }
 </style>
@@ -102,7 +101,7 @@ var {
 	the substituted string (as in Emacs <code>regexp-replace-in-string</code>).
 	This can be used to avoid the ambiguity whereby <code>'pre</code> and
 	<code>'post</code> have predefined meanings and can't refer to submatch
-	names.  Implementors are encouraged to support these two extensions.</li></ul>
+	names.  Implementors are encouraged to support these two extensions.</li></ul></li></ul>
 
 <p>
 <h1>Table of Contents</h1>
@@ -113,8 +112,8 @@ var {
 <li><a href="#Compatibility-Levels-and-Features">Compatibility Levels and Features</a></li>
 <li><a href="#Library-Procedures-and-Syntax">Library Procedures and Syntax</a></li>
 <li><a href="#SRE-Syntax">SRE Syntax</a></li>
-<ul>
-<ul>
+<li>
+  <ul>
     <li><a href="#SRE_2dSyntax_Basic-Patterns">Basic Patterns</a></li>
     <li><a href="#SRE_2dSyntax_Repeating-patterns">Repeating patterns</a></li>
     <li><a href="#SRE_2dSyntax_Submatch-Patterns">Submatch Patterns</a></li>
@@ -123,8 +122,8 @@ var {
     <li><a href="#SRE_2dSyntax_Boundary-Assertions">Boundary Assertions</a></li>
     <li><a href="#SRE_2dSyntax_Non-Greedy-Patterns">Non-Greedy Patterns</a></li>
     <li><a href="#SRE_2dSyntax_Look-Around-Patterns">Look Around Patterns</a></li>
-</ul>
-</ul>
+  </ul>
+</li>
 <li><a href="#Implementation">Implementation</a></li>
 <li><a href="#References">References</a></li>
 </ul>
@@ -312,8 +311,9 @@ Look Around Patterns
 <h1><a name="Library-Procedures-and-Syntax">Library Procedures and Syntax</a></h1>
 
 <p>
-<dt>(<a name="proc-regexp"><code class="proc-def">regexp</code></a> <var>re</var>) => regexp
-<dd class="proc-def"></dd>
+<dl>
+<dt>(<a name="proc-regexp"><code class="proc-def">regexp</code></a> <var>re</var>) => regexp</dt>
+<dd class="proc-def"></dd></dl>
 
 <p> Compiles a regexp if given an object whose structure matches the
   SRE syntax.  This may be written as a literal or partial literal
@@ -327,8 +327,9 @@ Look Around Patterns
   causing unspecified results if subsequently used for matching.
 
 <p>
-<dt>(<a name="proc-rx"><code class="proc-def">rx</code></a> <var>sre</var> <var>...</var>) => regexp
-<dd class="proc-def"></dd>
+<dl>
+<dt>(<a name="proc-rx"><code class="proc-def">rx</code></a> <var>sre</var> <var>...</var>) => regexp</dt>
+<dd class="proc-def"></dd></dl>
 
 <p> Macro shorthand for <code>(regexp `(: <var>sre</var> ...))</code>.
   May be able to perform some or all computation at compile time if
@@ -354,8 +355,8 @@ Look Around Patterns
   prefer the procedural interface.  </blockquote>
 
 <p>
-<dt>(<a name="proc-regexp-sre"><code class="proc-def">regexp-&gt;sre</code></a> <var>re</var>) => sre
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-regexp-sre"><code class="proc-def">regexp-&gt;sre</code></a> <var>re</var>) => sre</dt>
+<dd class="proc-def"></dd></dl>
 
 <p> Returns an SRE corresponding to the given regexp <var>re</var>.
   The SRE will be equivalent to (will match the same strings) but not
@@ -364,8 +365,8 @@ Look Around Patterns
   causing unspecified results if subsequently used for matching.
 
 <p>
-<dt>(<a name="proc-char-set-sre"><code class="proc-def">char-set-&gt;sre</code></a> <var>char-set</var>) => sre
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-char-set-sre"><code class="proc-def">char-set-&gt;sre</code></a> <var>char-set</var>) => sre</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Returns an SRE corresponding to the given SRFI 14 character set.
@@ -374,22 +375,22 @@ Look Around Patterns
   for writing portably.
 
 <p>
-<dt>(<a name="proc-valid-sre_3f"><code class="proc-def">valid-sre?</code></a> <var>obj</var>) => boolean
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-valid-sre_3f"><code class="proc-def">valid-sre?</code></a> <var>obj</var>) => boolean</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Returns true iff <var>obj</var> can be safely passed to <var>regexp</var>.
 
 <p>
-<dt>(<a name="proc-regexp_3f"><code class="proc-def">regexp?</code></a> <var>obj</var>) => boolean
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-regexp_3f"><code class="proc-def">regexp?</code></a> <var>obj</var>) => boolean</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Returns true iff <var>obj</var> is a regexp.
 
 <p>
-<dt>(<a name="proc-regexp-matches"><code class="proc-def">regexp-matches</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => regexp-match-or-false
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-regexp-matches"><code class="proc-def">regexp-matches</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => regexp-match-or-false</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Returns an regexp-match object if <var>re</var> successfully matches the entire
@@ -398,8 +399,8 @@ Look Around Patterns
   extract any submatches.
 
 <p>
-<dt>(<a name="proc-regexp-matches_3f"><code class="proc-def">regexp-matches?</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => boolean?
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-regexp-matches_3f"><code class="proc-def">regexp-matches?</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => boolean?</dt>
+<dd class="proc-def"></dd></dl>
 
 <p> Returns <code>#t</code> if <var>re</var> matches <var>str</var> as
   in regexp-matches, or <code>#f</code> otherwise.  May be faster than
@@ -407,8 +408,8 @@ Look Around Patterns
   data.
 
 <p>
-<dt>(<a name="proc-regexp-search"><code class="proc-def">regexp-search</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => regexp-match-or-false
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-regexp-search"><code class="proc-def">regexp-search</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => regexp-match-or-false</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Returns a regexp-match object if <var>re</var> successfully matches a substring
@@ -417,8 +418,8 @@ Look Around Patterns
   information needed to extract any submatches.
 
 <p>
-<dt>(<a name="proc-regexp-fold"><code class="proc-def">regexp-fold</code></a> <var>re</var> <var>kons</var> <var>knil</var> <var>str</var> <var>[finish</var> <var>[start</var> <var>[end]]]</var>) => obj
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-regexp-fold"><code class="proc-def">regexp-fold</code></a> <var>re</var> <var>kons</var> <var>knil</var> <var>str</var> <var>[finish</var> <var>[start</var> <var>[end]]]</var>) => obj</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   The fundamental regexp matching iterator.  Repeatedly searches <var>str</var>
@@ -448,8 +449,8 @@ Look Around Patterns
 </pre>
 
 <p>
-<dt>(<a name="proc-regexp-extract"><code class="proc-def">regexp-extract</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => list
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-regexp-extract"><code class="proc-def">regexp-extract</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => list</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Extracts all non-empty substrings of <var>str</var> which match <var>re</var> between
@@ -462,8 +463,8 @@ Look Around Patterns
 </pre>
 
 
-<dt>(<a name="proc-regexp-split"><code class="proc-def">regexp-split</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => list
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-regexp-split"><code class="proc-def">regexp-split</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => list</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Splits <var>str</var> into a list of (possibly empty) strings separated by non-empty matches of <var>re</var>.
@@ -479,8 +480,8 @@ Look Around Patterns
 </pre>
 
 
-<dt>(<a name="proc-regexp-partition"><code class="proc-def">regexp-partition</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => list
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-regexp-partition"><code class="proc-def">regexp-partition</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => list</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Partitions <var>str</var> into a list of non-empty strings matching <var>re</var>,
@@ -511,8 +512,8 @@ Look Around Patterns
 </pre>
 
 
-<dt>(<a name="proc-regexp-replace"><code class="proc-def">regexp-replace</code></a> <var>re</var> <var>str</var> <var>subst</var> [<var>start</var> [<var>end</var> [<var>count</var>]]) => string
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-regexp-replace"><code class="proc-def">regexp-replace</code></a> <var>re</var> <var>str</var> <var>subst</var> [<var>start</var> [<var>end</var> [<var>count</var>]]) => string</dt>
+<dd class="proc-def"></dd></dl>
 
 <p> Returns a new string replacing the <var>count</var>th match of
   <var>re</var> in <var>str</var> the <var>subst</var>, where the
@@ -545,8 +546,8 @@ Look Around Patterns
 </pre>
 
 
-<dt>(<a name="proc-regexp-replace-all"><code class="proc-def">regexp-replace-all</code></a> <var>re</var> <var>str</var> <var>subst</var> <var>[start</var> <var>[end]]</var>) => string
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-regexp-replace-all"><code class="proc-def">regexp-replace-all</code></a> <var>re</var> <var>str</var> <var>subst</var> <var>[start</var> <var>[end]]</var>) => string</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Equivalent to <var>regexp-replace</var>, but replaces all occurrences of <var>re</var>
@@ -559,8 +560,8 @@ Look Around Patterns
 </pre>
 
 
-<dt>(<a name="proc-regexp-match_3f"><code class="proc-def">regexp-match?</code></a> <var>obj</var>) => boolean
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-regexp-match_3f"><code class="proc-def">regexp-match?</code></a> <var>obj</var>) => boolean</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Returns true iff <var>obj</var> is a successful match from <code>regexp-matches</code> or
@@ -573,8 +574,8 @@ Look Around Patterns
 </pre>
 
 <p>
-<dt>(<a name="proc-regexp-match-count"><code class="proc-def">regexp-match-count</code></a> <var>regexp-match</var>) => integer
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-regexp-match-count"><code class="proc-def">regexp-match-count</code></a> <var>regexp-match</var>) => integer</dt>
+<dd class="proc-def"></dd></dl>
 
 <p> Returns the number of submatches of regexp-match, regardless of
   whether they matched or not.  Does not include the implicit zero
@@ -586,8 +587,8 @@ Look Around Patterns
 </pre>
 
 <p>
-<dt>(<a name="proc-regexp-match-submatch"><code class="proc-def">regexp-match-submatch</code></a> <var>regexp-match</var> <var>field</var>) => string-or-false
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-regexp-match-submatch"><code class="proc-def">regexp-match-submatch</code></a> <var>regexp-match</var> <var>field</var>) => string-or-false</dt>
+<dd class="proc-def"></dd></dl>
 
 <p> Returns the substring matched in <var>regexp-match</var>
   corresponding to <var>field</var>, either an integer or a symbol for
@@ -610,8 +611,8 @@ string has been mutated is unspecified.
 </pre>
 
 <p>
-<dt>(<a name="proc-regexp-match-submatch-start"><code class="proc-def">regexp-match-submatch-start</code></a> <var>regexp-match</var> <var>field</var>) => integer-or-false
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-regexp-match-submatch-start"><code class="proc-def">regexp-match-submatch-start</code></a> <var>regexp-match</var> <var>field</var>) => integer-or-false</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Returns the start index <var>regexp-match</var> corresponding to
@@ -627,8 +628,8 @@ string has been mutated is unspecified.
 </pre>
 
 <p>
-<dt>(<a name="proc-regexp-match-submatch-end"><code class="proc-def">regexp-match-submatch-end</code></a> <var>regexp-match</var> <var>field</var>) => integer-or-false
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-regexp-match-submatch-end"><code class="proc-def">regexp-match-submatch-end</code></a> <var>regexp-match</var> <var>field</var>) => integer-or-false</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Returns the end index in <var>regexp-match</var> corresponding to
@@ -644,8 +645,8 @@ string has been mutated is unspecified.
 </pre>
 
 <p>
-<dt>(<a name="proc-regexp-match-_3elist"><code class="proc-def">regexp-match-&gt;list</code></a> <var>regexp-match</var>) => list
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-regexp-match-_3elist"><code class="proc-def">regexp-match-&gt;list</code></a> <var>regexp-match</var>) => list</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Returns a list of all submatches in <var>regexp-match</var> as string or false,
@@ -779,8 +780,8 @@ string has been mutated is unspecified.
 <h3><a name="SRE_2dSyntax_Basic-Patterns">Basic Patterns</a></h3>
 
 <p>
-<dt><a name="proc-_3cstring_3e"><code class="proc-def">&lt;string&gt;</code></a> 
-<dd class="proc-def"></dd>
+<dl><dt><a name="proc-_3cstring_3e"><code class="proc-def">&lt;string&gt;</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   A literal string.
@@ -792,10 +793,10 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt>(<a name="proc-seq"><code class="proc-def">seq</code></a> <var>sre</var> <var>...</var>)
+<dl><dt>(<a name="proc-seq"><code class="proc-def">seq</code></a> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-_3a"><code class="proc-def">:</code></a> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dt>(<a name="proc-_3a"><code class="proc-def">:</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Sequencing.  Matches if each of <var>sre</var> matches adjacently in order.
@@ -806,10 +807,10 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt>(<a name="proc-or"><code class="proc-def">or</code></a> <var>sre</var> <var>...</var>)
+<dl><dt>(<a name="proc-or"><code class="proc-def">or</code></a> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-_7c_5c_7c_7c"><code class="proc-def">|\||</code></a> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dt>(<a name="proc-_7c_5c_7c_7c"><code class="proc-def">|\||</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Alternation.  Matches if any of <var>sre</var> match.
@@ -821,8 +822,8 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt>(<a name="proc-w_2fnocase"><code class="proc-def">w/nocase</code></a> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-w_2fnocase"><code class="proc-def">w/nocase</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p> Enclosed <var>sres</var> are case-insensitive.  In a Unicode
   context character and string literals match with the default simple
@@ -868,8 +869,8 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt>(<a name="proc-w_2fcase"><code class="proc-def">w/case</code></a> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-w_2fcase"><code class="proc-def">w/case</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p> Enclosed <var>sres</var> are case-sensitive.  This is the default,
   and overrides any enclosing <code>w/nocase</code> setting.
@@ -881,8 +882,8 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt>(<a name="proc-w_2fascii"><code class="proc-def">w/ascii</code></a> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-w_2fascii"><code class="proc-def">w/ascii</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Enclosed <var>sres</var> are interpreted in an ASCII context.  In practice
@@ -897,8 +898,8 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt>(<a name="proc-w_2funicode"><code class="proc-def">w/unicode</code></a> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-w_2funicode"><code class="proc-def">w/unicode</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Enclosed <var>sres</var> are interpreted in a Unicode context - character
@@ -913,8 +914,8 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt>(<a name="proc-w_2fnocapture"><code class="proc-def">w/nocapture</code></a> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-w_2fnocapture"><code class="proc-def">w/nocapture</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Disables capturing for all submatches
@@ -942,10 +943,10 @@ string has been mutated is unspecified.
 <h3><a name="SRE_2dSyntax_Repeating-patterns">Repeating patterns</a></h3>
 
 <p>
-<dt>(<code class="proc-def">optional</code> <var>sre</var> <var>...</var>)
+<dl><dt>(<code class="proc-def">optional</code> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-_3f"><code class="proc-def">?</code></a> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dt>(<a name="proc-_3f"><code class="proc-def">?</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   An optional pattern - matches 1 or 0 times.
@@ -958,10 +959,10 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt>(<code class="proc-def">zero-or-more</code> <var>sre</var> <var>...</var>)
+<dl><dt>(<code class="proc-def">zero-or-more</code> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-_2a"><code class="proc-def">*</code></a> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dt>(<a name="proc-_2a"><code class="proc-def">*</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Kleene star, matches 0 or more times.
@@ -974,10 +975,10 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt>(<code class="proc-def">one-or-more</code> <var>sre</var> <var>...</var>)
+<dl><dt>(<code class="proc-def">one-or-more</code> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-_2b"><code class="proc-def">+</code></a> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dt>(<a name="proc-_2b"><code class="proc-def">+</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   1 or more matches.  Like <code>*</code> but requires at least a single match.
@@ -990,10 +991,10 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt>(<code class="proc-def">at-least</code> <var>n</var> <var>sre</var> <var>...</var>)
+<dl><dt>(<code class="proc-def">at-least</code> <var>n</var> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-_3e_3d"><code class="proc-def">&gt;=</code></a> <var>n</var> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dt>(<a name="proc-_3e_3d"><code class="proc-def">&gt;=</code></a> <var>n</var> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   More generally, <var>n</var> or more matches.
@@ -1006,10 +1007,10 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt>(<code class="proc-def">exactly</code> <var>n</var> <var>sre</var> <var>...</var>)
+<dl><dt>(<code class="proc-def">exactly</code> <var>n</var> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-_3d"><code class="proc-def">=</code></a> <var>n</var> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dt>(<a name="proc-_3d"><code class="proc-def">=</code></a> <var>n</var> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Exactly <var>n</var> matches.
@@ -1021,10 +1022,10 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt>(<code class="proc-def">repeated</code> <var>from</var> <var>to</var> <var>sre</var> <var>...</var>)
+<dl><dt>(<code class="proc-def">repeated</code> <var>from</var> <var>to</var> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-_2a_2a"><code class="proc-def">**</code></a> <var>from</var> <var>to</var> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dt>(<a name="proc-_2a_2a"><code class="proc-def">**</code></a> <var>from</var> <var>to</var> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   The most general form, from <var>n</var> to <var>m</var> matches, inclusive.
@@ -1039,28 +1040,28 @@ string has been mutated is unspecified.
 <h3><a name="SRE_2dSyntax_Submatch-Patterns">Submatch Patterns</a></h3>
 
 <p>
-<dt>(<a name="proc-submatch"><code class="proc-def">submatch</code></a> <var>sre</var> <var>...</var>)
+<dl><dt>(<a name="proc-submatch"><code class="proc-def">submatch</code></a> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-_24"><code class="proc-def">$</code></a> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dt>(<a name="proc-_24"><code class="proc-def">$</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   A numbered submatch.  The contents matching the pattern
   will be available in the resulting regexp-match.
 
 <p>
-<dt>(<a name="proc-submatch-named"><code class="proc-def">submatch-named</code></a> <var>name</var> <var>sre</var> <var>...</var>)
+<dl><dt>(<a name="proc-submatch-named"><code class="proc-def">submatch-named</code></a> <var>name</var> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-_3d_3e"><code class="proc-def">-&gt;</code></a> <var>name</var> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dt>(<a name="proc-_3d_3e"><code class="proc-def">-&gt;</code></a> <var>name</var> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   A named submatch.  Behaves just like <var>submatch</var>, but the field may
   also be referred to by <var>name</var>.
 
 <p>
-<dt>(<a name="proc-backref"><code class="proc-def">backref</code></a> <var>n-or-name</var>)
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-backref"><code class="proc-def">backref</code></a> <var>n-or-name</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Optional: Match a previously matched submatch.  The feature
@@ -1076,8 +1077,8 @@ string has been mutated is unspecified.
   A character set pattern matches a single character.
 
 <p>
-<dt><a name="proc-_3cchar_3e"><code class="proc-def">&lt;char&gt;</code></a> 
-<dd class="proc-def"></dd>
+<dl><dt><a name="proc-_3cchar_3e"><code class="proc-def">&lt;char&gt;</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   A singleton char set.
@@ -1089,8 +1090,8 @@ string has been mutated is unspecified.
 </pre>
 
 <p>
-<dt><a name="proc-_22_3cchar_3e_22"><code class="proc-def">"&lt;char&gt;"</code></a> 
-<dd class="proc-def"></dd>
+<dl><dt><a name="proc-_22_3cchar_3e_22"><code class="proc-def">"&lt;char&gt;"</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   A singleton char set written as a string of length one rather than a
@@ -1099,8 +1100,8 @@ string has been mutated is unspecified.
   <code>cset-sre</code>s.
 
 <p>
-<dt><a name="proc-_3cchar-set_3e"><code class="proc-def">&lt;char-set&gt;</code></a> 
-<dd class="proc-def"></dd>
+<dl><dt><a name="proc-_3cchar-set_3e"><code class="proc-def">&lt;char-set&gt;</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   A SRFI 14 character set, which matches any character in the set.
@@ -1125,10 +1126,10 @@ string has been mutated is unspecified.
   <code>char-set-&gt;sre</code> can be used.  </blockquote>
 
 <p>
-<dt><a name="proc-char-set"><code class="proc-def">(char-set &lt;string&gt;)</code></a>
+<dl><dt><a name="proc-char-set"><code class="proc-def">(char-set &lt;string&gt;)</code></a></dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-_28_3cstring_3e_29"><code class="proc-def">&lt;string&gt;)</code></a> 
-<dd class="proc-def"></dd>
+<dt>(<a name="proc-_28_3cstring_3e_29"><code class="proc-def">&lt;string&gt;)</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   The set of chars as formed by SRFI 14 <code>(string-&gt;char-set <var>&lt;string&gt;</var>)</code>.
@@ -1150,10 +1151,10 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt>(<code class="proc-def">char-range</code> <var>&lt;range-spec&gt;</var> <var>...</var>)
+<dl><dt>(<code class="proc-def">char-range</code> <var>&lt;range-spec&gt;</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-_2f"><code class="proc-def">/</code></a> <var>&lt;range-spec&gt;</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dt>(<a name="proc-_2f"><code class="proc-def">/</code></a> <var>&lt;range-spec&gt;</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Ranged char set.  The <var>&lt;range-spec&gt;</var> is a list of strings and
@@ -1168,10 +1169,10 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt>(<a name="proc-union"><code class="proc-def">or</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)
+<dl><dt>(<a name="proc-union"><code class="proc-def">or</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-union"><code class="proc-def">|\||</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dt>(<a name="proc-union"><code class="proc-def">|\||</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Char set union.  The single vertical bar form is provided for
@@ -1179,10 +1180,10 @@ string has been mutated is unspecified.
   be escaped in R7RS.
 
 <p>
-<dt>(<code class="proc-def">complement</code> <var>&lt;cset-sre&gt;</var> <var>...</var>)
+<dl><dt>(<code class="proc-def">complement</code> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-_7e"><code class="proc-def">~</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dt>(<a name="proc-_7e"><code class="proc-def">~</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Char set complement (i.e. [^...] in PCRE notation).  <code>(~ x)</code>
@@ -1190,10 +1191,10 @@ string has been mutated is unspecified.
   complement is always ASCII.
 
 <p>
-<dt>(<code class="proc-def">difference</code> <var>&lt;cset-sre&gt;</var> <var>...</var>)
+<dl><dt>(<code class="proc-def">difference</code> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc--"><code class="proc-def">-</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dt>(<a name="proc--"><code class="proc-def">-</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Char set difference.
@@ -1205,10 +1206,10 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt>(<a name="proc-and"><code class="proc-def">and</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)
+<dl><dt>(<a name="proc-and"><code class="proc-def">and</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-_26"><code class="proc-def">&amp;</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dt>(<a name="proc-_26"><code class="proc-def">&amp;</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Char set intersection.
@@ -1223,31 +1224,31 @@ string has been mutated is unspecified.
 <h3><a name="SRE_2dSyntax_Named-Character-Sets">Named Character Sets</a></h3>
 
 <p>
-<dt><a name="proc-any"><code class="proc-def">any</code></a> 
-<dd class="proc-def"></dd>
+<dl><dt><a name="proc-any"><code class="proc-def">any</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Match any character.  Equivalent to <code>ascii</code> in an ASCII context.
 
 <p>
-<dt><a name="proc-nonl"><code class="proc-def">nonl</code></a> 
-<dd class="proc-def"></dd>
+<dl><dt><a name="proc-nonl"><code class="proc-def">nonl</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p> Match any character other than <code>#\return</code> or
   <code>#\newline</code>.
 
 <p>
-<dt><a name="proc-ascii"><code class="proc-def">ascii</code></a> 
-<dd class="proc-def"></dd>
+<dl><dt><a name="proc-ascii"><code class="proc-def">ascii</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Match any ASCII character [0..127].
 
 <p>
-<dt><a name="proc-lower-case"><code class="proc-def">lower-case</code></a> 
+<dl><dt><a name="proc-lower-case"><code class="proc-def">lower-case</code></a> </dt>
 <dd class="proc-def"></dd>
-<dt><a name="proc-lower"><code class="proc-def">lower</code></a> 
-<dd class="proc-def"></dd>
+<dt><a name="proc-lower"><code class="proc-def">lower</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p> Matches any character for which <code>char-lower-case?</code>
   returns true.  In a Unicode context this corresponds to the
@@ -1255,10 +1256,10 @@ string has been mutated is unspecified.
   corresponds to <code>(/ "az")</code>.
 
 <p>
-<dt><a name="proc-upper-case"><code class="proc-def">upper-case</code></a> 
+<dl><dt><a name="proc-upper-case"><code class="proc-def">upper-case</code></a> </dt>
 <dd class="proc-def"></dd>
-<dt><a name="proc-upper"><code class="proc-def">upper</code></a> 
-<dd class="proc-def"></dd>
+<dt><a name="proc-upper"><code class="proc-def">upper</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p> Matches any character for which <code>char-upper-case?</code>
   returns true.  In a Unicode context this corresponds to the
@@ -1266,10 +1267,10 @@ string has been mutated is unspecified.
   corresponds to <code>(/ "AZ")</code>.
 
 <p>
-<dt><a name="proc-title-case"><code class="proc-def">title-case</code></a> 
+<dl><dt><a name="proc-title-case"><code class="proc-def">title-case</code></a> </dt>
 <dd class="proc-def"></dd>
-<dt><a name="proc-title"><code class="proc-def">title</code></a> 
-<dd class="proc-def"></dd>
+<dt><a name="proc-title"><code class="proc-def">title</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p> Matches any character with the Unicode Titlecase (Lt) property.
   This property only exists for the sake of ligature characters, of
@@ -1277,10 +1278,10 @@ string has been mutated is unspecified.
   empty.
 
 <p>
-<dt><a name="proc-alphabetic"><code class="proc-def">alphabetic</code></a> 
+<dl><dt><a name="proc-alphabetic"><code class="proc-def">alphabetic</code></a> </dt>
 <dd class="proc-def"></dd>
-<dt><a name="proc-alpha"><code class="proc-def">alpha</code></a> 
-<dd class="proc-def"></dd>
+<dt><a name="proc-alpha"><code class="proc-def">alpha</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p> Matches any character for which <code>char-alphabetic?</code>
   returns true.  In a Unicode context this corresponds to the
@@ -1288,10 +1289,10 @@ string has been mutated is unspecified.
   context corresponds to <code>(w/nocase (/ "az"))</code>.
 
 <p>
-<dt><a name="proc-numeric"><code class="proc-def">numeric</code></a> 
+<dl><dt><a name="proc-numeric"><code class="proc-def">numeric</code></a> </dt>
 <dd class="proc-def"></dd>
-<dt><a name="proc-num"><code class="proc-def">num</code></a> 
-<dd class="proc-def"></dd>
+<dt><a name="proc-num"><code class="proc-def">num</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Matches any character for which <code>char-numeric?</code> returns true.  For
@@ -1299,12 +1300,12 @@ string has been mutated is unspecified.
   property.  In an ASCII context corresponds to <code>(/ "09")</code>.
 
 <p>
-<dt><a name="proc-alphanumeric"><code class="proc-def">alphanumeric</code></a> 
+<dl><dt><a name="proc-alphanumeric"><code class="proc-def">alphanumeric</code></a> </dt>
 <dd class="proc-def"></dd>
-<dt><a name="proc-alphanum"><code class="proc-def">alphanum</code></a> 
+<dt><a name="proc-alphanum"><code class="proc-def">alphanum</code></a> </dt>
 <dd class="proc-def"></dd>
-<dt><a name="proc-alnum"><code class="proc-def">alnum</code></a> 
-<dd class="proc-def"></dd>
+<dt><a name="proc-alnum"><code class="proc-def">alnum</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Matches any character which is either a letter or number.
@@ -1316,10 +1317,10 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt><a name="proc-punctuation"><code class="proc-def">punctuation</code></a> 
+<dl><dt><a name="proc-punctuation"><code class="proc-def">punctuation</code></a> </dt>
 <dd class="proc-def"></dd>
-<dt><a name="proc-punct"><code class="proc-def">punct</code></a> 
-<dd class="proc-def"></dd>
+<dt><a name="proc-punct"><code class="proc-def">punct</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Matches any punctuation character.  In a Unicode context this
@@ -1327,8 +1328,8 @@ string has been mutated is unspecified.
   this corresponds to <code>"!\"#%&amp;'()*,-./:;?@[\]_{}"</code>.
 
 <p>
-<dt><a name="proc-symbol"><code class="proc-def">symbol</code></a> 
-<dd class="proc-def"></dd>
+<dl><dt><a name="proc-symbol"><code class="proc-def">symbol</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Matches any symbol character.  In a Unicode context this corresponds
@@ -1336,10 +1337,10 @@ string has been mutated is unspecified.
   corresponds to <code>"$+&lt;=&gt;^`|~"</code>.
 
 <p>
-<dt><a name="proc-graphic"><code class="proc-def">graphic</code></a> 
+<dl><dt><a name="proc-graphic"><code class="proc-def">graphic</code></a> </dt>
 <dd class="proc-def"></dd>
-<dt><a name="proc-graph"><code class="proc-def">graph</code></a> 
-<dd class="proc-def"></dd>
+<dt><a name="proc-graph"><code class="proc-def">graph</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Matches any graphic character.  Equivalent to:
@@ -1350,12 +1351,12 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt><a name="proc-whitespace"><code class="proc-def">whitespace</code></a> 
+<dl><dt><a name="proc-whitespace"><code class="proc-def">whitespace</code></a> </dt>
 <dd class="proc-def"></dd>
-<dt><a name="proc-white"><code class="proc-def">white</code></a> 
+<dt><a name="proc-white"><code class="proc-def">white</code></a> </dt>
 <dd class="proc-def"></dd>
-<dt><a name="proc-space"><code class="proc-def">space</code></a> 
-<dd class="proc-def"></dd>
+<dt><a name="proc-space"><code class="proc-def">space</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Matches any whitespace character.  In a Unicode context this
@@ -1364,10 +1365,10 @@ string has been mutated is unspecified.
   carriage return.
 
 <p>
-<dt><a name="proc-printing"><code class="proc-def">printing</code></a> 
+<dl><dt><a name="proc-printing"><code class="proc-def">printing</code></a> </dt>
 <dd class="proc-def"></dd>
-<dt><a name="proc-print"><code class="proc-def">print</code></a> 
-<dd class="proc-def"></dd>
+<dt><a name="proc-print"><code class="proc-def">print</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Matches any printing character.  Equivalent to:
@@ -1378,10 +1379,10 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt><a name="proc-control"><code class="proc-def">control</code></a> 
+<dl><dt><a name="proc-control"><code class="proc-def">control</code></a> </dt>
 <dd class="proc-def"></dd>
-<dt><a name="proc-cntrl"><code class="proc-def">cntrl</code></a> 
-<dd class="proc-def"></dd>
+<dt><a name="proc-cntrl"><code class="proc-def">cntrl</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Matches any control or other character.  In a Unicode context this
@@ -1394,10 +1395,10 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt><a name="proc-hex-digit"><code class="proc-def">hex-digit</code></a> 
+<dl><dt><a name="proc-hex-digit"><code class="proc-def">hex-digit</code></a> </dt>
 <dd class="proc-def"></dd>
-<dt><a name="proc-xdigit"><code class="proc-def">xdigit</code></a> 
-<dd class="proc-def"></dd>
+<dt><a name="proc-xdigit"><code class="proc-def">xdigit</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Matches any valid digit in hexadecimal notation.  Always ASCII-only.
@@ -1412,10 +1413,10 @@ string has been mutated is unspecified.
 <h3><a name="SRE_2dSyntax_Boundary-Assertions">Boundary Assertions</a></h3>
 
 <p>
-<dt><a name="proc-bos"><code class="proc-def">bos</code></a> 
+<dl><dt><a name="proc-bos"><code class="proc-def">bos</code></a> </dt>
 <dd class="proc-def"></dd>
-<dt><a name="proc-eos"><code class="proc-def">eos</code></a> 
-<dd class="proc-def"></dd>
+<dt><a name="proc-eos"><code class="proc-def">eos</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Matches at the beginning/end of string without consuming any
@@ -1424,10 +1425,10 @@ string has been mutated is unspecified.
   rather than the full string.
 
 <p>
-<dt><a name="proc-bol"><code class="proc-def">bol</code></a> 
+<dl><dt><a name="proc-bol"><code class="proc-def">bol</code></a> </dt>
 <dd class="proc-def"></dd>
-<dt><a name="proc-eol"><code class="proc-def">eol</code></a> 
-<dd class="proc-def"></dd>
+<dt><a name="proc-eol"><code class="proc-def">eol</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Matches at the beginning/end of a line without consuming any
@@ -1441,10 +1442,10 @@ string has been mutated is unspecified.
   on a substring and the actual surrounding characters differ.
 
 <p>
-<dt><a name="proc-bow"><code class="proc-def">bow</code></a> 
+<dl><dt><a name="proc-bow"><code class="proc-def">bow</code></a> </dt>
 <dd class="proc-def"></dd>
-<dt><a name="proc-eow"><code class="proc-def">eow</code></a> 
-<dd class="proc-def"></dd>
+<dt><a name="proc-eow"><code class="proc-def">eow</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Matches at the beginning/end of a word without consuming any
@@ -1468,16 +1469,16 @@ string has been mutated is unspecified.
 </pre>
 
 <p>
-<dt><a name="proc-nwb"><code class="proc-def">nwb</code></a> 
-<dd class="proc-def"></dd>
+<dl><dt><a name="proc-nwb"><code class="proc-def">nwb</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Matches a non-word-boundary (i.e. \B in PCRE).  Equivalent to
   <code>(neg-look-ahead (or bow eow))</code>.
 
 <p>
-<dt>(<a name="proc-word"><code class="proc-def">word</code></a> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-word"><code class="proc-def">word</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Anchors a sequence to word boundaries.  Equivalent to:
@@ -1488,8 +1489,8 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt>(<a name="proc-word_2b"><code class="proc-def">word+</code></a> <var>cset-sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-word_2b"><code class="proc-def">word+</code></a> <var>cset-sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Matches a single word composed of characters in the intersection of
@@ -1502,17 +1503,17 @@ string has been mutated is unspecified.
 </pre>
 
 
-<dt><a name="proc-word"><code class="proc-def">word</code></a> 
-<dd class="proc-def"></dd>
+<dl><dt><a name="proc-word"><code class="proc-def">word</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   A shorthand for <code>(word+ any)</code>.
 
 <p>
-<dt><a name="proc-bog"><code class="proc-def">bog</code></a> 
+<dl><dt><a name="proc-bog"><code class="proc-def">bog</code></a> </dt>
 <dd class="proc-def"></dd>
-<dt><a name="proc-eog"><code class="proc-def">eog</code></a> 
-<dd class="proc-def"></dd>
+<dt><a name="proc-eog"><code class="proc-def">eog</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p> Matches at the beginning/end of a single extended grapheme cluster
   without consuming any characters (a zero-width assertion).  Grapheme
@@ -1522,8 +1523,8 @@ string has been mutated is unspecified.
   end.  These always succeed in an ASCII context.
 
 <p>
-<dt><a name="proc-grapheme"><code class="proc-def">grapheme</code></a> 
-<dd class="proc-def"></dd>
+<dl><dt><a name="proc-grapheme"><code class="proc-def">grapheme</code></a> </dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Matches a single grapheme cluster (i.e. \X in PCRE).  This is what
@@ -1563,30 +1564,30 @@ string has been mutated is unspecified.
   <code>regexp-non-greedy</code> is provided.
 
 <p>
-<dt>(<code class="proc-def">non-greedy-optional</code> <var>sre</var> <var>...</var>)
+<dl><dt>(<code class="proc-def">non-greedy-optional</code> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-_3f_3f"><code class="proc-def">??</code></a> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dt>(<a name="proc-_3f_3f"><code class="proc-def">??</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Non-greedy pattern, matches 0 or 1 times, preferring the shorter
   match.
 
 <p>
-<dt>(<code class="proc-def">non-greedy-zero-or-more</code>< <var>sre</var> <var>...</var>)
+<dl><dt>(<code class="proc-def">non-greedy-zero-or-more</code> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-_2a_3f"><code class="proc-def">*?</code></a> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dt>(<a name="proc-_2a_3f"><code class="proc-def">*?</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Non-greedy Kleene star, matches 0 or more times, preferring the
   shorter match.
 
 <p>
-<dt>(<code class="proc-def">non-greedy-repeated</code> <var>m</var> <var>n</var> <var>sre</var> <var>...</var>)
+<dl><dt>(<code class="proc-def">non-greedy-repeated</code> <var>m</var> <var>n</var> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-_2a_2a_3f"><code class="proc-def">**?</code></a> <var>m</var> <var>n</var> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dt>(<a name="proc-_2a_2a_3f"><code class="proc-def">**?</code></a> <var>m</var> <var>n</var> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Non-greedy Kleene star, matches <var>m</var> to <var>n</var> times, preferring the
@@ -1599,8 +1600,8 @@ string has been mutated is unspecified.
   <code>regexp-look-around</code> is provided.
 
 <p>
-<dt>(<a name="proc-look-ahead"><code class="proc-def">look-ahead</code></a> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-look-ahead"><code class="proc-def">look-ahead</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Zero-width look-ahead assertion.  Asserts the sequence matches from
@@ -1613,8 +1614,8 @@ string has been mutated is unspecified.
 </pre>
 
 <p>
-<dt>(<a name="proc-look-behind"><code class="proc-def">look-behind</code></a> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-look-behind"><code class="proc-def">look-behind</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Zero-width look-behind assertion.  Asserts the sequence matches
@@ -1622,15 +1623,15 @@ string has been mutated is unspecified.
   an error if the sequence does not have a fixed length.
 
 <p>
-<dt>(<a name="proc-neg-look-ahead"><code class="proc-def">neg-look-ahead</code></a> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-neg-look-ahead"><code class="proc-def">neg-look-ahead</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Zero-width negative look-ahead assertion.
 
 <p>
-<dt>(<a name="proc-neg-look-behind"><code class="proc-def">neg-look-behind</code></a> <var>sre</var> <var>...</var>)
-<dd class="proc-def"></dd>
+<dl><dt>(<a name="proc-neg-look-behind"><code class="proc-def">neg-look-behind</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
 
 <p>
   Zero-width negative look-behind assertion.
@@ -1788,7 +1789,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.</p>
 
     <hr />
-<address>Editor: <a href="mailto:srfi-editors at srfi dot schemers dot org">
+<address>Editor: <a href="mailto:srfi-editors+at+srfi+dot+schemers+dot+org">
              Mike Sperber</a></address>
 
 </body>
