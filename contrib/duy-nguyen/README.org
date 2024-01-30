@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2020 Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
 This is from ~(chibi regexp)~, renamed to ~(srfi 115)~ and made sure
 only srfi symbols are exported. ~(chibi char-set boundary)~ becomes
 ~(srfi 115 boundary)~.

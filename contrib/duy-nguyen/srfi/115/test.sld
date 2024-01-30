@@ -1,3 +1,7 @@
+;;;; SPDX-FileCopyrightText: 2015 - 2019 Alex Shinn
+;;;;
+;;;; SPDX-License-Identifier: BSD-3-Clause
+
 (define-library (srfi 115 test)
   (export run-tests)
   (import (scheme base) (scheme char) (scheme file) (scheme write)

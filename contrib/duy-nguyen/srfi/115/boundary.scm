@@ -1,3 +1,7 @@
+;;;; SPDX-FileCopyrightText: 2015 Alex Shinn
+;;;;
+;;;; SPDX-License-Identifier: CC0-1.0
+
 ;; Control
 (define char-set:control (immutable-char-set (char-set-union (ucs-range->char-set 0 10) (ucs-range->char-set 11 13) (ucs-range->char-set 14 32) (ucs-range->char-set 127 160) (ucs-range->char-set 1536 1541) (ucs-range->char-set 8206 8208) (ucs-range->char-set 8234 8239) (ucs-range->char-set 8288 8293) (ucs-range->char-set 8294 8304) (ucs-range->char-set 55296 57344) (ucs-range->char-set 65520 65529) (ucs-range->char-set 65529 65532) (ucs-range->char-set 119155 119163) (ucs-range->char-set 917506 917536) (ucs-range->char-set 917536 917632) (ucs-range->char-set 917632 917760) (ucs-range->char-set 918000 921600))))
 
