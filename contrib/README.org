@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2020 Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+# SPDX-FileCopyrightText: 2020 Arthur A. Gleckler <srfi@speechcode.com>
 #
 # SPDX-License-Identifier: MIT
 
