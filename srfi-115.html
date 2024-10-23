@@ -94,19 +94,33 @@ var {
 		  href="https://www.unicode.org/mail-arch/unicode-ml/y2017-m12/0045.html">Unicode.org
 	    message</a> and <a href="https://srfi-email.schemers.org/srfi-115/msg/15038927/">Alex's
 	    SRFI message</a>.)</li>
-      <li>
-	<b>Post-finalization note</b>: In <code>regexp-replace</code> and
-	<code>regexp-replace-all</code>, the <code>subst</code> is
-	defined to be a string, integer or symbol.  However, the
-	sample implementation as well as equivalent procedures in
-	IrRegex and SCSH also allow a list of any of these, with the
-	results concatenated.  In addition, the sample implementation
-	accepts a procedure of one argument, which is applied to the
-	corresponding <code>regexp-match</code> object to obtain
-	the substituted string (as in Emacs <code>regexp-replace-in-string</code>).
-	This can be used to avoid the ambiguity whereby <code>'pre</code> and
-	<code>'post</code> have predefined meanings and can't refer to submatch
-	names.  Implementors are encouraged to support these two extensions.</li></ul></li></ul>
+      <li><b>Post-finalization notes</b>:
+        <ul>
+          <li>Added 2020-04-13: In <code>regexp-replace</code> and
+	    <code>regexp-replace-all</code>, the <code>subst</code> is
+	    defined to be a string, integer or symbol.  However, the
+	    sample implementation as well as equivalent procedures in
+	    IrRegex and SCSH also allow a list of any of these, with the
+	    results concatenated.  In addition, the sample implementation
+	    accepts a procedure of one argument, which is applied to the
+	    corresponding <code>regexp-match</code> object to obtain
+	    the substituted string (as in Emacs <code>regexp-replace-in-string</code>).
+	    This can be used to avoid the ambiguity whereby <code>'pre</code> and
+	    <code>'post</code> have predefined meanings and can't
+	    refer to submatch names.  Implementors are encouraged to
+	    support these two extensions.</li>
+          <li>Added 2024-10-23: The design of this SRFI is intended to
+            allow implementors to compile SREs to their native regexp
+            libraries.  Therefore, the submatch semantics are left
+            unspecified.  The preferred semantics is leftmost-longest,
+            i.e. if multiple submatches are possible the leftmost is
+            preferred, choosing the longest submatch as the
+            tie-breaker among those starting at the same position.
+            The reference implementation, IrRegex, and the cited Re
+            implementations provide this semantics, however most
+            backtracking algorithms only approximate this behavior.
+            Similarly, the non-greedy-* patterns should provide
+            leftmost-shortest semantics.</li></ul></li></ul></li></ul>
 
 <p>
 <h1>Table of Contents</h1>
