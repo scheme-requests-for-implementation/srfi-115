@@ -59,10 +59,6 @@ var {
 
 <p>
   Scheme Regular Expressions
-
-<p>
-
-<p>
 </div>
 <h1><a name="Author">Author</a></h1>
 
@@ -122,7 +118,6 @@ var {
             Similarly, the non-greedy-* patterns should provide
             leftmost-shortest semantics.</li></ul></li></ul></li></ul>
 
-<p>
 <h1>Table of Contents</h1>
 <ul id="toc-table">
 <li><a href="#Abstract">Abstract</a></li>
@@ -155,7 +150,6 @@ var {
   notation first introduced by <a href="#ref-SCSH">SCSH</a>, and
   extended heavily by <a href="#ref-IrRegex">IrRegex</a>.
 
-<p>
 <h1><a name="Rationale">Rationale</a></h1>
 
 <p> Regular expressions, coming from a long history of formal language
@@ -178,9 +172,6 @@ var {
   lines of code, whereas in IrRegex the full PCRE parser alone
   requires over 500 lines.
 
-<p>
-
-<p>
 <h1>Procedure Index</h1>
 <pre>
 <a href="#proc-regexp">regexp</a>   <a href="#proc-rx">rx</a>     <a href="#proc-regexp-sre">regexp-&gt;sre</a>       <a href="#proc-char-set-sre">char-set-&gt;sre</a>
@@ -256,7 +247,6 @@ Look Around Patterns
   In the prototypes below the following naming conventions imply type
   restrictions:
 
-<p>
 <ul>
 <li><var>char-set</var>: a SRFI 14 character set
 <li><var>cset-sre</var>: an sre which corresponds to matching a single character out of a set of characters
@@ -272,10 +262,6 @@ Look Around Patterns
 <li><var>str</var>: a string
 <li><var>subst</var>: an sexp describing a substitution template
 <li><var>X-or-false</var>: either an object of type X or the false value
-
-<p>
-
-<p>
 </ul>
 <h1><a name="Compatibility-Levels-and-Features">Compatibility Levels and Features</a></h1>
 
@@ -303,7 +289,6 @@ Look Around Patterns
   availability can be tested with the following <code>cond-expand</code>
   features:
 
-<p>
 <ul>
 <li><code>regexp-non-greedy</code> - the non-greedy repetition patterns <code>??</code>, <code>*?</code>, and <code>**?</code> are supported
 <li><code>regexp-look-around</code> - the <code>[neg-]look-ahead</code> and <code>[neg-]look-behind</code> zero-width assertions are supported
@@ -324,12 +309,8 @@ Look Around Patterns
   (Unicode Text Segmentation).  Implementations which provide this
   feature may still support non-Unicode characters.
 
-<p>
-
-<p>
 <h1><a name="Library-Procedures-and-Syntax">Library Procedures and Syntax</a></h1>
 
-<p>
 <dl>
 <dt>(<a name="proc-regexp"><code class="proc-def">regexp</code></a> <var>re</var>) => regexp</dt>
 <dd class="proc-def"></dd></dl>
@@ -345,7 +326,6 @@ Look Around Patterns
 <p> Mutating <var>re</var> may invalidate the resulting regexp,
   causing unspecified results if subsequently used for matching.
 
-<p>
 <dl>
 <dt>(<a name="proc-rx"><code class="proc-def">rx</code></a> <var>sre</var> <var>...</var>) => regexp</dt>
 <dd class="proc-def"></dd></dl>
@@ -373,7 +353,6 @@ Look Around Patterns
   the frequency with which SREs are read and written as text, we
   prefer the procedural interface.  </blockquote>
 
-<p>
 <dl><dt>(<a name="proc-regexp-sre"><code class="proc-def">regexp-&gt;sre</code></a> <var>re</var>) => sre</dt>
 <dd class="proc-def"></dd></dl>
 
@@ -383,7 +362,6 @@ Look Around Patterns
   <var>re</var>.  Mutating the result may invalidate <var>re</var>,
   causing unspecified results if subsequently used for matching.
 
-<p>
 <dl><dt>(<a name="proc-char-set-sre"><code class="proc-def">char-set-&gt;sre</code></a> <var>char-set</var>) => sre</dt>
 <dd class="proc-def"></dd></dl>
 
@@ -393,21 +371,18 @@ Look Around Patterns
   not make use of embedded SRFI 14 character sets, and so is suitable
   for writing portably.
 
-<p>
 <dl><dt>(<a name="proc-valid-sre_3f"><code class="proc-def">valid-sre?</code></a> <var>obj</var>) => boolean</dt>
 <dd class="proc-def"></dd></dl>
 
 <p>
   Returns true iff <var>obj</var> can be safely passed to <var>regexp</var>.
 
-<p>
 <dl><dt>(<a name="proc-regexp_3f"><code class="proc-def">regexp?</code></a> <var>obj</var>) => boolean</dt>
 <dd class="proc-def"></dd></dl>
 
 <p>
   Returns true iff <var>obj</var> is a regexp.
 
-<p>
 <dl><dt>(<a name="proc-regexp-matches"><code class="proc-def">regexp-matches</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => regexp-match-or-false</dt>
 <dd class="proc-def"></dd></dl>
 
@@ -417,7 +392,6 @@ Look Around Patterns
   match fails.  The regexp-match object will contain information needed to
   extract any submatches.
 
-<p>
 <dl><dt>(<a name="proc-regexp-matches_3f"><code class="proc-def">regexp-matches?</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => boolean?</dt>
 <dd class="proc-def"></dd></dl>
 
@@ -426,7 +400,6 @@ Look Around Patterns
   <code>regexp-matches</code> since it doesn't need to return submatch
   data.
 
-<p>
 <dl><dt>(<a name="proc-regexp-search"><code class="proc-def">regexp-search</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => regexp-match-or-false</dt>
 <dd class="proc-def"></dd></dl>
 
@@ -436,7 +409,6 @@ Look Around Patterns
   <code>#f</code> if the match fails.  The regexp-match object will contain
   information needed to extract any submatches.
 
-<p>
 <dl><dt>(<a name="proc-regexp-fold"><code class="proc-def">regexp-fold</code></a> <var>re</var> <var>kons</var> <var>knil</var> <var>str</var> <var>[finish</var> <var>[start</var> <var>[end]]]</var>) => obj</dt>
 <dd class="proc-def"></dd></dl>
 
@@ -454,7 +426,6 @@ Look Around Patterns
 <p>
   By default <var>finish</var> just returns <i>acc</i>.
 
-<p>
 <pre class="code-example">
    (regexp-fold 'word
                 (lambda (i m str acc)
@@ -467,7 +438,6 @@ Look Around Patterns
    =&gt; '(("not" . 1) ("or" . 1) ("be" . 2) ("to" . 2))
 </pre>
 
-<p>
 <dl><dt>(<a name="proc-regexp-extract"><code class="proc-def">regexp-extract</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => list</dt>
 <dd class="proc-def"></dd></dl>
 
@@ -475,7 +445,6 @@ Look Around Patterns
   Extracts all non-empty substrings of <var>str</var> which match <var>re</var> between
   <var>start</var> and <var>end</var> as a list of strings.
 
-<p>
 <pre class="code-example">
    (regexp-extract '(+ numeric) "192.168.0.1")
    =&gt; ("192" "168" "0" "1")
@@ -488,7 +457,6 @@ Look Around Patterns
 <p>
   Splits <var>str</var> into a list of (possibly empty) strings separated by non-empty matches of <var>re</var>.
 
-<p>
 <pre class="code-example">
    (regexp-split '(+ space) " fee fi  fo\tfum\n")
    =&gt; ("" "fee" "fi" "fo" "fum" "")
@@ -518,7 +486,6 @@ Look Around Patterns
   interleaving the results of <code>regexp-split</code> and
   <code>regexp-extract</code>, starting with the former.
 
-<p>
 <pre class="code-example">
    (regexp-partition '(+ (or space punct)) "")
    =&gt; ("")
@@ -552,7 +519,6 @@ Look Around Patterns
   As a convenience, a value of <code>#f</code> for <var>end</var>
   is equivalent to <code>(string-length str)</code>.
 
-<p>
 <pre class="code-example">
    (regexp-replace '(+ space) "one two three" "_")
    =&gt; "one_two three"
@@ -572,7 +538,6 @@ Look Around Patterns
   Equivalent to <var>regexp-replace</var>, but replaces all occurrences of <var>re</var>
   in <var>str</var>.
 
-<p>
 <pre class="code-example">
    (regexp-replace-all '(+ space) "one two three" "_")
    =&gt; "one_two_three"
@@ -586,13 +551,11 @@ Look Around Patterns
   Returns true iff <var>obj</var> is a successful match from <code>regexp-matches</code> or
   <code>regexp-search</code>.
 
-<p>
 <pre class="code-example">
    (regexp-match? (regexp-matches "x" "x"))  =&gt; #t
    (regexp-match? (regexp-matches "x" "y"))  =&gt; #f
 </pre>
 
-<p>
 <dl><dt>(<a name="proc-regexp-match-count"><code class="proc-def">regexp-match-count</code></a> <var>regexp-match</var>) => integer</dt>
 <dd class="proc-def"></dd></dl>
 
@@ -605,7 +568,6 @@ Look Around Patterns
    (regexp-match-count (regexp-matches '($ "x") "x"))  =&gt; 1
 </pre>
 
-<p>
 <dl><dt>(<a name="proc-regexp-match-submatch"><code class="proc-def">regexp-match-submatch</code></a> <var>regexp-match</var> <var>field</var>) => string-or-false</dt>
 <dd class="proc-def"></dd></dl>
 
@@ -629,7 +591,6 @@ string has been mutated is unspecified.
     (regexp-search '(: "*" ($ word) "*") "**foo**") 1)  =&gt; "foo"
 </pre>
 
-<p>
 <dl><dt>(<a name="proc-regexp-match-submatch-start"><code class="proc-def">regexp-match-submatch-start</code></a> <var>regexp-match</var> <var>field</var>) => integer-or-false</dt>
 <dd class="proc-def"></dd></dl>
 
@@ -646,7 +607,6 @@ string has been mutated is unspecified.
     (regexp-search '(: "*" ($ word) "*") "**foo**") 1)  =&gt; 2
 </pre>
 
-<p>
 <dl><dt>(<a name="proc-regexp-match-submatch-end"><code class="proc-def">regexp-match-submatch-end</code></a> <var>regexp-match</var> <var>field</var>) => integer-or-false</dt>
 <dd class="proc-def"></dd></dl>
 
@@ -663,7 +623,6 @@ string has been mutated is unspecified.
     (regexp-search '(: "*" ($ word) "*") "**foo**") 1)  =&gt; 5
 </pre>
 
-<p>
 <dl><dt>(<a name="proc-regexp-match-_3elist"><code class="proc-def">regexp-match-&gt;list</code></a> <var>regexp-match</var>) => list</dt>
 <dd class="proc-def"></dd></dl>
 
@@ -677,9 +636,6 @@ string has been mutated is unspecified.
     =&gt; '("cats & dogs" "cats" "dogs")
 </pre>
 
-<p>
-
-<p>
 <h1><a name="SRE-Syntax">SRE Syntax</a></h1>
 
 <p> The grammar for SREs is summarized below.  Note that an SRE is a
@@ -690,7 +646,6 @@ string has been mutated is unspecified.
 
   The following sections explain the semantics in greater detail.
 
-<p>
 <pre class="code-example">
     &lt;sre&gt; ::=
      | &lt;string&gt;                    ; A literal string match.
@@ -760,7 +715,6 @@ string has been mutated is unspecified.
 
   The grammar for <code>cset-sre</code> is as follows.
 
-<p>
 <pre class="code-example">
     &lt;cset-sre&gt; ::=
      | &lt;char&gt;                      ; literal char
@@ -798,14 +752,12 @@ string has been mutated is unspecified.
 
 <h3><a name="SRE_2dSyntax_Basic-Patterns">Basic Patterns</a></h3>
 
-<p>
 <dl><dt><a name="proc-_3cstring_3e"><code class="proc-def">&lt;string&gt;</code></a> </dt>
 <dd class="proc-def"></dd></dl>
 
 <p>
   A literal string.
 
-<p>
 <pre class="code-example">
    (regexp-search "needle" "hayneedlehay") =&gt; #&lt;regexp-match&gt;
    (regexp-search "needle" "haynEEdlehay") =&gt; #f
@@ -820,7 +772,6 @@ string has been mutated is unspecified.
 <p>
   Sequencing.  Matches if each of <var>sre</var> matches adjacently in order.
 
-<p>
 <pre class="code-example">
    (regexp-search '(: "one" space "two" space "three") "one two three") =&gt; #&lt;regexp-match&gt;
 </pre>
@@ -834,7 +785,6 @@ string has been mutated is unspecified.
 <p>
   Alternation.  Matches if any of <var>sre</var> match.
 
-<p>
 <pre class="code-example">
    (regexp-search '(or "eeney" "meeney" "miney") "meeney") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(or "eeney" "meeney" "miney") "moe") =&gt; #f
@@ -874,7 +824,6 @@ string has been mutated is unspecified.
   these are not equivalent to <code>alpha</code> as there are
   characters with the letter property but no case.
 
-<p>
 <pre class="code-example">
    (regexp-search "needle" "haynEEdlehay") =&gt; #f
    (regexp-search '(w/nocase "needle") "haynEEdlehay") =&gt; #&lt;regexp-match&gt;
@@ -894,7 +843,6 @@ string has been mutated is unspecified.
 <p> Enclosed <var>sres</var> are case-sensitive.  This is the default,
   and overrides any enclosing <code>w/nocase</code> setting.
 
-<p>
 <pre class="code-example">
    (regexp-search '(w/nocase "SMALL" (w/case "BIG")) "smallBIGsmall") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(w/nocase (~ (w/case ("Aab")))) "b") =&gt; #f
@@ -910,7 +858,6 @@ string has been mutated is unspecified.
   characters are relevant.  Switching to ASCII mode can improve
   performance in some implementations.
 
-<p>
 <pre class="code-example">
    (regexp-search '(w/ascii bos (* alpha) eos) "English") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(w/ascii bos (* alpha) eos) "Ελληνική") =&gt; #f
@@ -926,7 +873,6 @@ string has been mutated is unspecified.
   no effect if the <code>regexp-unicode</code> feature is not provided.  This
   is the default.
 
-<p>
 <pre class="code-example">
    (regexp-search '(w/unicode bos (* alpha) eos) "English") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(w/unicode bos (* alpha) eos) "Ελληνική") =&gt; #&lt;regexp-match&gt;
@@ -945,7 +891,6 @@ string has been mutated is unspecified.
   utility SREs which you want to incorporate without affecting your
   submatch positions.
 
-<p>
 <pre class="code-example">
    (let ((number '($ (+ digit))))
      (cdr
@@ -961,7 +906,6 @@ string has been mutated is unspecified.
 
 <h3><a name="SRE_2dSyntax_Repeating-patterns">Repeating patterns</a></h3>
 
-<p>
 <dl><dt>(<code class="proc-def">optional</code> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
 <dt>(<a name="proc-_3f"><code class="proc-def">?</code></a> <var>sre</var> <var>...</var>)</dt>
@@ -970,7 +914,6 @@ string has been mutated is unspecified.
 <p>
   An optional pattern - matches 1 or 0 times.
 
-<p>
 <pre class="code-example">
    (regexp-search '(: "match" (? "es") "!") "matches!") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(: "match" (? "es") "!") "match!") =&gt; #&lt;regexp-match&gt;
@@ -986,7 +929,6 @@ string has been mutated is unspecified.
 <p>
   Kleene star, matches 0 or more times.
 
-<p>
 <pre class="code-example">
    (regexp-search '(: "&lt;" (* (~ #\&gt;)) "&gt;") "&lt;html&gt;") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(: "&lt;" (* (~ #\&gt;)) "&gt;") "&lt;&gt;") =&gt; #&lt;regexp-match&gt;
@@ -1002,7 +944,6 @@ string has been mutated is unspecified.
 <p>
   1 or more matches.  Like <code>*</code> but requires at least a single match.
 
-<p>
 <pre class="code-example">
    (regexp-search '(: "&lt;" (+ (~ #\&gt;)) "&gt;") "&lt;html&gt;") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(: "&lt;" (+ (~ #\&gt;)) "&gt;") "&lt;a&gt;") =&gt; #&lt;regexp-match&gt;
@@ -1018,7 +959,6 @@ string has been mutated is unspecified.
 <p>
   More generally, <var>n</var> or more matches.
 
-<p>
 <pre class="code-example">
    (regexp-search '(: "&lt;" (&gt;= 3 (~ #\&gt;)) "&gt;") "&lt;table&gt;") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(: "&lt;" (&gt;= 3 (~ #\&gt;)) "&gt;") "&lt;pre&gt;") =&gt; #&lt;regexp-match&gt;
@@ -1034,7 +974,6 @@ string has been mutated is unspecified.
 <p>
   Exactly <var>n</var> matches.
 
-<p>
 <pre class="code-example">
    (regexp-search '(: "&lt;" (= 4 (~ #\&gt;)) "&gt;") "&lt;html&gt;") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(: "&lt;" (= 4 (~ #\&gt;)) "&gt;") "&lt;table&gt;") =&gt; #f
@@ -1049,7 +988,6 @@ string has been mutated is unspecified.
 <p>
   The most general form, from <var>n</var> to <var>m</var> matches, inclusive.
 
-<p>
 <pre class="code-example">
    (regexp-search '(: (= 3 (** 1 3 numeric) ".") (** 1 3 numeric)) "192.168.1.10") =&gt; #&lt;regexp-match&gt;
    (regexp-search '(: (= 3 (** 1 3 numeric) ".") (** 1 3 numeric)) "192.0168.1.10") =&gt; #f
@@ -1058,7 +996,6 @@ string has been mutated is unspecified.
 
 <h3><a name="SRE_2dSyntax_Submatch-Patterns">Submatch Patterns</a></h3>
 
-<p>
 <dl><dt>(<a name="proc-submatch"><code class="proc-def">submatch</code></a> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
 <dt>(<a name="proc-_24"><code class="proc-def">$</code></a> <var>sre</var> <var>...</var>)</dt>
@@ -1068,7 +1005,6 @@ string has been mutated is unspecified.
   A numbered submatch.  The contents matching the pattern
   will be available in the resulting regexp-match.
 
-<p>
 <dl><dt>(<a name="proc-submatch-named"><code class="proc-def">submatch-named</code></a> <var>name</var> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
 <dt>(<a name="proc-_3d_3e"><code class="proc-def">-&gt;</code></a> <var>name</var> <var>sre</var> <var>...</var>)</dt>
@@ -1078,7 +1014,6 @@ string has been mutated is unspecified.
   A named submatch.  Behaves just like <var>submatch</var>, but the field may
   also be referred to by <var>name</var>.
 
-<p>
 <dl><dt>(<a name="proc-backref"><code class="proc-def">backref</code></a> <var>n-or-name</var>)</dt>
 <dd class="proc-def"></dd></dl>
 
@@ -1089,26 +1024,22 @@ string has been mutated is unspecified.
   NP-hard, so one should avoid their use even in implementations which
   support them.
 
-<p>
 <h3><a name="SRE_2dSyntax_Character-Sets">Character Sets</a></h3>
 
 <p>
   A character set pattern matches a single character.
 
-<p>
 <dl><dt><a name="proc-_3cchar_3e"><code class="proc-def">&lt;char&gt;</code></a> </dt>
 <dd class="proc-def"></dd></dl>
 
 <p>
   A singleton char set.
 
-<p>
 <pre class="code-example">
    (regexp-matches '(* #\-) "---") =&gt; #&lt;regexp-match&gt;
    (regexp-matches '(* #\-) "-_-") =&gt; #f
 </pre>
 
-<p>
 <dl><dt><a name="proc-_22_3cchar_3e_22"><code class="proc-def">"&lt;char&gt;"</code></a> </dt>
 <dd class="proc-def"></dd></dl>
 
@@ -1118,7 +1049,6 @@ string has been mutated is unspecified.
   match, but included to clarify it can be composed in
   <code>cset-sre</code>s.
 
-<p>
 <dl><dt><a name="proc-_3cchar-set_3e"><code class="proc-def">&lt;char-set&gt;</code></a> </dt>
 <dd class="proc-def"></dd></dl>
 
@@ -1129,7 +1059,6 @@ string has been mutated is unspecified.
   typically generated programmatically, such as with a quasiquoted
   expression.
 
-<p>
 <pre class="code-example">
    (regexp-partition `(+ ,char-set:vowels) "vowels")
    =&gt; ("v" "o" "w" "e" "ls")
@@ -1144,7 +1073,6 @@ string has been mutated is unspecified.
   is necessary.  When a readable external representation is needed,
   <code>char-set-&gt;sre</code> can be used.  </blockquote>
 
-<p>
 <dl><dt><a name="proc-char-set"><code class="proc-def">(char-set &lt;string&gt;)</code></a></dt>
 <dd class="proc-def"></dd>
 <dt>(<a name="proc-_28_3cstring_3e_29"><code class="proc-def">&lt;string&gt;)</code></a> </dt>
@@ -1158,7 +1086,6 @@ string has been mutated is unspecified.
    inserted separately from any preceding base characters by
    <code>string-&gt;char-set</code>.
 
-<p>
 <pre class="code-example">
    (regexp-matches '(* ("aeiou")) "oui") =&gt; #&lt;regexp-match&gt;
    (regexp-matches '(* ("aeiou")) "ouais") =&gt; #f
@@ -1181,7 +1108,6 @@ string has been mutated is unspecified.
   characters, and all ranges formed by the pairs are included in the
   char set.
 
-<p>
 <pre class="code-example">
    (regexp-matches '(* (/ "AZ09")) "R2D2") =&gt; #&lt;regexp-match&gt;
    (regexp-matches '(* (/ "AZ09")) "C-3PO") =&gt; #f
@@ -1190,7 +1116,7 @@ string has been mutated is unspecified.
 
 <dl><dt>(<a name="proc-union"><code class="proc-def">or</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc-union"><code class="proc-def">|\||</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
+<dt>(<a><code class="proc-def">|\||</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd></dl>
 
 <p>
@@ -1198,7 +1124,6 @@ string has been mutated is unspecified.
   consistency and compatibility with SCSH, although it needs to
   be escaped in R7RS.
 
-<p>
 <dl><dt>(<code class="proc-def">complement</code> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
 <dt>(<a name="proc-_7e"><code class="proc-def">~</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
@@ -1209,7 +1134,6 @@ string has been mutated is unspecified.
   is equivalent to <code>(- any x)</code>, thus in an ASCII context the
   complement is always ASCII.
 
-<p>
 <dl><dt>(<code class="proc-def">difference</code> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
 <dt>(<a name="proc--"><code class="proc-def">-</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
@@ -1218,7 +1142,6 @@ string has been mutated is unspecified.
 <p>
   Char set difference.
 
-<p>
 <pre class="code-example">
    (regexp-matches '(* (- (/ "az") ("aeiou"))) "xyzzy") =&gt; #&lt;regexp-match&gt;
    (regexp-matches '(* (- (/ "az") ("aeiou"))) "vowels") =&gt; #f
@@ -1233,7 +1156,6 @@ string has been mutated is unspecified.
 <p>
   Char set intersection.
 
-<p>
 <pre class="code-example">
    (regexp-matches '(* (&amp; (/ "az") (~ ("aeiou")))) "xyzzy") =&gt; #&lt;regexp-match&gt;
    (regexp-matches '(* (&amp; (/ "az") (~ ("aeiou")))) "vowels") =&gt; #f
@@ -1242,28 +1164,24 @@ string has been mutated is unspecified.
 
 <h3><a name="SRE_2dSyntax_Named-Character-Sets">Named Character Sets</a></h3>
 
-<p>
 <dl><dt><a name="proc-any"><code class="proc-def">any</code></a> </dt>
 <dd class="proc-def"></dd></dl>
 
 <p>
   Match any character.  Equivalent to <code>ascii</code> in an ASCII context.
 
-<p>
 <dl><dt><a name="proc-nonl"><code class="proc-def">nonl</code></a> </dt>
 <dd class="proc-def"></dd></dl>
 
 <p> Match any character other than <code>#\return</code> or
   <code>#\newline</code>.
 
-<p>
 <dl><dt><a name="proc-ascii"><code class="proc-def">ascii</code></a> </dt>
 <dd class="proc-def"></dd></dl>
 
 <p>
   Match any ASCII character [0..127].
 
-<p>
 <dl><dt><a name="proc-lower-case"><code class="proc-def">lower-case</code></a> </dt>
 <dd class="proc-def"></dd>
 <dt><a name="proc-lower"><code class="proc-def">lower</code></a> </dt>
@@ -1274,7 +1192,6 @@ string has been mutated is unspecified.
   Lowercase (Ll + Other_Lowercase) property.  In an ASCII context
   corresponds to <code>(/ "az")</code>.
 
-<p>
 <dl><dt><a name="proc-upper-case"><code class="proc-def">upper-case</code></a> </dt>
 <dd class="proc-def"></dd>
 <dt><a name="proc-upper"><code class="proc-def">upper</code></a> </dt>
@@ -1285,7 +1202,6 @@ string has been mutated is unspecified.
   Uppercase (Lu + Other_Uppercase) property.  In an ASCII context
   corresponds to <code>(/ "AZ")</code>.
 
-<p>
 <dl><dt><a name="proc-title-case"><code class="proc-def">title-case</code></a> </dt>
 <dd class="proc-def"></dd>
 <dt><a name="proc-title"><code class="proc-def">title</code></a> </dt>
@@ -1296,7 +1212,6 @@ string has been mutated is unspecified.
   which only 31 exist at time of writing.  In an ASCII context this is
   empty.
 
-<p>
 <dl><dt><a name="proc-alphabetic"><code class="proc-def">alphabetic</code></a> </dt>
 <dd class="proc-def"></dd>
 <dt><a name="proc-alpha"><code class="proc-def">alpha</code></a> </dt>
@@ -1307,7 +1222,6 @@ string has been mutated is unspecified.
   Alphabetic (L + Nl + Other_Alphabetic) property.  In an ASCII
   context corresponds to <code>(w/nocase (/ "az"))</code>.
 
-<p>
 <dl><dt><a name="proc-numeric"><code class="proc-def">numeric</code></a> </dt>
 <dd class="proc-def"></dd>
 <dt><a name="proc-num"><code class="proc-def">num</code></a> </dt>
@@ -1318,7 +1232,6 @@ string has been mutated is unspecified.
   In a Unicode context this corresponds to the Numeric_Digit (Nd)
   property.  In an ASCII context corresponds to <code>(/ "09")</code>.
 
-<p>
 <dl><dt><a name="proc-alphanumeric"><code class="proc-def">alphanumeric</code></a> </dt>
 <dd class="proc-def"></dd>
 <dt><a name="proc-alphanum"><code class="proc-def">alphanum</code></a> </dt>
@@ -1330,7 +1243,6 @@ string has been mutated is unspecified.
   Matches any character which is either a letter or number.
   Equivalent to:
 
-<p>
 <pre class="code-example">
    (or alphabetic numeric)
 </pre>
@@ -1346,7 +1258,6 @@ string has been mutated is unspecified.
   corresponds to the Punctuation property (P).  In an ASCII context
   this corresponds to <code>"!\"#%&amp;'()*,-./:;?@[\]_{}"</code>.
 
-<p>
 <dl><dt><a name="proc-symbol"><code class="proc-def">symbol</code></a> </dt>
 <dd class="proc-def"></dd></dl>
 
@@ -1355,7 +1266,6 @@ string has been mutated is unspecified.
   to the Symbol property (Sm, Sc, Sk, or So).  In an ASCII this
   corresponds to <code>"$+&lt;=&gt;^`|~"</code>.
 
-<p>
 <dl><dt><a name="proc-graphic"><code class="proc-def">graphic</code></a> </dt>
 <dd class="proc-def"></dd>
 <dt><a name="proc-graph"><code class="proc-def">graph</code></a> </dt>
@@ -1364,7 +1274,6 @@ string has been mutated is unspecified.
 <p>
   Matches any graphic character.  Equivalent to:
 
-<p>
 <pre class="code-example">
    (or alphanumeric punctuation symbol)
 </pre>
@@ -1383,7 +1292,6 @@ string has been mutated is unspecified.
   context this corresponds to space, tab, line feed, form feed, and
   carriage return.
 
-<p>
 <dl><dt><a name="proc-printing"><code class="proc-def">printing</code></a> </dt>
 <dd class="proc-def"></dd>
 <dt><a name="proc-print"><code class="proc-def">print</code></a> </dt>
@@ -1392,7 +1300,6 @@ string has been mutated is unspecified.
 <p>
   Matches any printing character.  Equivalent to:
 
-<p>
 <pre class="code-example">
    (or graphic whitespace)
 </pre>
@@ -1408,7 +1315,6 @@ string has been mutated is unspecified.
   corresponds to the Other property (Cc, Cf, Co, Cs or Cn).  In an
   ASCII context this corresponds to:
 
-<p>
 <pre class="code-example">
    `(/ ,(integer-&gt;char 0) ,(integer-char 31))
 </pre>
@@ -1423,7 +1329,6 @@ string has been mutated is unspecified.
   Matches any valid digit in hexadecimal notation.  Always ASCII-only.
   Equivalent to:
 
-<p>
 <pre class="code-example">
    (w/ascii (w/nocase (or numeric "abcdef")))
 </pre>
@@ -1431,7 +1336,6 @@ string has been mutated is unspecified.
 
 <h3><a name="SRE_2dSyntax_Boundary-Assertions">Boundary Assertions</a></h3>
 
-<p>
 <dl><dt><a name="proc-bos"><code class="proc-def">bos</code></a> </dt>
 <dd class="proc-def"></dd>
 <dt><a name="proc-eos"><code class="proc-def">eos</code></a> </dt>
@@ -1443,7 +1347,6 @@ string has been mutated is unspecified.
   with start/end parameters, these are considered the end points,
   rather than the full string.
 
-<p>
 <dl><dt><a name="proc-bol"><code class="proc-def">bol</code></a> </dt>
 <dd class="proc-def"></dd>
 <dt><a name="proc-eol"><code class="proc-def">eol</code></a> </dt>
@@ -1460,7 +1363,6 @@ string has been mutated is unspecified.
   start and after the end of the string, even if the search was made
   on a substring and the actual surrounding characters differ.
 
-<p>
 <dl><dt><a name="proc-bow"><code class="proc-def">bow</code></a> </dt>
 <dd class="proc-def"></dd>
 <dt><a name="proc-eow"><code class="proc-def">eow</code></a> </dt>
@@ -1477,7 +1379,6 @@ string has been mutated is unspecified.
   even if the search was made on a substring and word constituent
   characters appear immediately before the beginning or after the end.
 
-<p>
 <pre class="code-example">
   (regexp-search '(: bow "foo") "foo") =&gt; #&lt;regexp-match&gt;
   (regexp-search '(: bow "foo") "&lt;foo&gt;>") =&gt; #&lt;regexp-match&gt;
@@ -1487,7 +1388,6 @@ string has been mutated is unspecified.
   (regexp-search '(: "foo" eow) "foobar") =&gt; #f
 </pre>
 
-<p>
 <dl><dt><a name="proc-nwb"><code class="proc-def">nwb</code></a> </dt>
 <dd class="proc-def"></dd></dl>
 
@@ -1495,14 +1395,12 @@ string has been mutated is unspecified.
   Matches a non-word-boundary (i.e. \B in PCRE).  Equivalent to
   <code>(neg-look-ahead (or bow eow))</code>.
 
-<p>
 <dl><dt>(<a name="proc-word"><code class="proc-def">word</code></a> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd></dl>
 
 <p>
   Anchors a sequence to word boundaries.  Equivalent to:
 
-<p>
 <pre class="code-example">
    (: bow <var>sre</var> ... eow)
 </pre>
@@ -1516,19 +1414,17 @@ string has been mutated is unspecified.
   the given <var>cset-sre</var> and the word constituent characters.
   Equivalent to:
 
-<p>
 <pre class="code-example">
    (word (+ (and (or alphanumeric "_") (or <var>cset-sre</var> ...))))
 </pre>
 
 
-<dl><dt><a name="proc-word"><code class="proc-def">word</code></a> </dt>
+<dl><dt><a><code class="proc-def">word</code></a> </dt>
 <dd class="proc-def"></dd></dl>
 
 <p>
   A shorthand for <code>(word+ any)</code>.
 
-<p>
 <dl><dt><a name="proc-bog"><code class="proc-def">bog</code></a> </dt>
 <dd class="proc-def"></dd>
 <dt><a name="proc-eog"><code class="proc-def">eog</code></a> </dt>
@@ -1541,7 +1437,6 @@ string has been mutated is unspecified.
   non-combining codepoints immediately before the start and after the
   end.  These always succeed in an ASCII context.
 
-<p>
 <dl><dt><a name="proc-grapheme"><code class="proc-def">grapheme</code></a> </dt>
 <dd class="proc-def"></dd></dl>
 
@@ -1559,7 +1454,6 @@ string has been mutated is unspecified.
   following SRE can be used with <code>regexp-extract</code> to
   define grapheme:
 
-<p>
 <pre class="code-example">
    `(or (: (* ,char-set:hangul-l) (+ ,char-set:hangul-v)
            (* ,char-set:hangul-t))
@@ -1582,7 +1476,6 @@ string has been mutated is unspecified.
   The following patterns are only supported if the feature
   <code>regexp-non-greedy</code> is provided.
 
-<p>
 <dl><dt>(<code class="proc-def">non-greedy-optional</code> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
 <dt>(<a name="proc-_3f_3f"><code class="proc-def">??</code></a> <var>sre</var> <var>...</var>)</dt>
@@ -1592,7 +1485,6 @@ string has been mutated is unspecified.
   Non-greedy pattern, matches 0 or 1 times, preferring the shorter
   match.
 
-<p>
 <dl><dt>(<code class="proc-def">non-greedy-zero-or-more</code> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
 <dt>(<a name="proc-_2a_3f"><code class="proc-def">*?</code></a> <var>sre</var> <var>...</var>)</dt>
@@ -1602,7 +1494,6 @@ string has been mutated is unspecified.
   Non-greedy Kleene star, matches 0 or more times, preferring the
   shorter match.
 
-<p>
 <dl><dt>(<code class="proc-def">non-greedy-repeated</code> <var>m</var> <var>n</var> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
 <dt>(<a name="proc-_2a_2a_3f"><code class="proc-def">**?</code></a> <var>m</var> <var>n</var> <var>sre</var> <var>...</var>)</dt>
@@ -1618,7 +1509,6 @@ string has been mutated is unspecified.
   The following patterns are only supported if the feature
   <code>regexp-look-around</code> is provided.
 
-<p>
 <dl><dt>(<a name="proc-look-ahead"><code class="proc-def">look-ahead</code></a> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd></dl>
 
@@ -1626,13 +1516,11 @@ string has been mutated is unspecified.
   Zero-width look-ahead assertion.  Asserts the sequence matches from
   the current position, without advancing the position.
 
-<p>
 <pre class="code-example">
    (regexp-matches '(: "regular" (look-ahead " expression") " expression") "regular expression")=&gt; #&lt;regexp-match&gt;
    (regexp-matches '(: "regular" (look-ahead " ") "expression") "regular expression")=&gt; #f
 </pre>
 
-<p>
 <dl><dt>(<a name="proc-look-behind"><code class="proc-def">look-behind</code></a> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd></dl>
 
@@ -1641,23 +1529,18 @@ string has been mutated is unspecified.
   behind the current position, without advancing the position.  It is
   an error if the sequence does not have a fixed length.
 
-<p>
 <dl><dt>(<a name="proc-neg-look-ahead"><code class="proc-def">neg-look-ahead</code></a> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd></dl>
 
 <p>
   Zero-width negative look-ahead assertion.
 
-<p>
 <dl><dt>(<a name="proc-neg-look-behind"><code class="proc-def">neg-look-behind</code></a> <var>sre</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd></dl>
 
 <p>
   Zero-width negative look-behind assertion.
 
-<p>
-
-<p>
 <h1><a name="Implementation">Implementation</a></h1>
 
 <p>
@@ -1682,14 +1565,8 @@ string has been mutated is unspecified.
   supporting all features, providing both a backtracking algorithm
   and DFA compilation.
 
-<p>
-
-<p>
 <h1><a name="References">References</a></h1>
 
-<p>
-
-<p>
 <dl>
 <dt class="biblio"><a name="ref-R7RS"><strong>R7RS</strong></a>
 <dd>
