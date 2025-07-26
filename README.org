@@ -1,5 +1,5 @@
 
-# SPDX-FileCopyrightText: 2024 Arthur A. Gleckler
+# SPDX-FileCopyrightText: 2025 Arthur A. Gleckler
 # SPDX-License-Identifier: MIT
 * SRFI 115: Scheme Regular Expressions
 
@@ -14,7 +14,7 @@ library-name: regexp
 This repository hosts [[https://srfi.schemers.org/srfi-115/][SRFI 115]]: Scheme Regular Expressions, a [[https://srfi.schemers.org/][Scheme Request for Implementation]].
 
 This SRFI is in /final/ status.
-
+See also [[/srfi-264/][SRFI 264: String Syntax for Scheme Regular Expressions]].
 The full documentation for this SRFI can be found in the [[https://srfi.schemers.org/srfi-115/srfi-115.html][SRFI Document]].
 
 If you'd like to participate in the discussion of this SRFI, or report issues with it, please [[https://srfi.schemers.org/srfi-115/][join the SRFI-115 mailing list]] and send your message there.
