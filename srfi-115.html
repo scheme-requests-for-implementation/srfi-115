@@ -90,6 +90,8 @@ var {
 		  href="https://www.unicode.org/mail-arch/unicode-ml/y2017-m12/0045.html">Unicode.org
 	    message</a> and <a href="https://srfi-email.schemers.org/srfi-115/msg/15038927/">Alex's
 	    SRFI message</a>.)</li>
+	  <li>2025-08-15 (Clarify arity of cset operations.
+	    See <a href="https://srfi-email.schemers.org/srfi-115/msg/31707359/">Sergei's message</a> and ensuing discussion.)</li>
       <li><b>Post-finalization notes</b>:
         <ul>
           <li>Added 2020-04-13: In <code>regexp-replace</code> and
@@ -728,14 +730,14 @@ string has been mutated is unspecified.
      | (|\|| &lt;cset-sre&gt; ...)
      | (and &lt;cset-sre&gt; ...)        ; intersection
      | (&amp; &lt;cset-sre&gt; ...)
-     | (- &lt;cset-sre&gt; ...)          ; difference
-     | (- &lt;difference&gt; ...)
+     | (difference &lt;base-cset&gt; &lt;cset-sre&gt; ...)  ; difference
+     | (- &lt;base-cset&gt; &lt;cset-sre&gt; ...)
      | (~ &lt;cset-sre&gt; ...)          ; complement of union
      | (complement &lt;cset-sre&gt; ...)
-     | (w/case &lt;cset-sre&gt; ...)     ; case and unicode toggling
-     | (w/nocase &lt;cset-sre&gt; ...)
-     | (w/ascii &lt;cset-sre&gt; ...)
-     | (w/unicode &lt;cset-sre&gt; ...)
+     | (w/case &lt;cset-sre&gt;)         ; case and unicode toggling
+     | (w/nocase &lt;cset-sre&gt;)
+     | (w/ascii &lt;cset-sre&gt;)
+     | (w/unicode &lt;cset-sre&gt;)
      | any | nonl | ascii | lower-case | lower
      | upper-case | upper | title-case | title
      | alphabetic | alpha | alphanumeric | alphanum | alnum
@@ -798,7 +800,7 @@ string has been mutated is unspecified.
   context character and string literals match with the default simple
   Unicode case-insensitive matching.  Implementations may, but are not
   required to, handle variable length case conversions, such as
-  #\x00DF "ß" matching the two characters "SS".
+  <code>#\x00DF<\code> "ß" matching the two characters "SS".
 
   <p>Character sets match if any character in the set matches
   case-insensitively to the input.  Conceptually each
@@ -823,6 +825,10 @@ string has been mutated is unspecified.
   <code>lower</code>.  Note that the case insensitive versions of
   these are not equivalent to <code>alpha</code> as there are
   characters with the letter property but no case.
+
+  <p>For this and other <code>w/...</code> forms multiple SREs may be
+  provided to match as a sequence, however if used directly inside a
+  cset exactly one argument must be provided as noted in the grammar.
 
 <pre class="code-example">
    (regexp-search "needle" "haynEEdlehay") =&gt; #f
@@ -986,10 +992,11 @@ string has been mutated is unspecified.
 <dd class="proc-def"></dd></dl>
 
 <p>
-  The most general form, from <var>n</var> to <var>m</var> matches, inclusive.
+  The most general form, from <var>from</var> to <var>to</var> matches, inclusive.  <var>to</var> may have an implementation-defined upper-bound.
 
 <pre class="code-example">
    (regexp-search '(: (= 3 (** 1 3 numeric) ".") (** 1 3 numeric)) "192.168.1.10") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(: (= 3 (** 1 3 numeric) ".") (** 1 3 numeric)) "192.168.1") =&gt; #f
    (regexp-search '(: (= 3 (** 1 3 numeric) ".") (** 1 3 numeric)) "192.0168.1.10") =&gt; #f
 </pre>
 
@@ -1122,7 +1129,8 @@ string has been mutated is unspecified.
 <p>
   Char set union.  The single vertical bar form is provided for
   consistency and compatibility with SCSH, although it needs to
-  be escaped in R7RS.
+  be escaped in R7RS.  With no arguments is equivalent to the
+  empty set.
 
 <dl><dt>(<code class="proc-def">complement</code> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
@@ -1134,13 +1142,14 @@ string has been mutated is unspecified.
   is equivalent to <code>(- any x)</code>, thus in an ASCII context the
   complement is always ASCII.
 
-<dl><dt>(<code class="proc-def">difference</code> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
+<dl><dt>(<code class="proc-def">difference</code> <var>&lt;base-cset&gt;</var> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd>
-<dt>(<a name="proc--"><code class="proc-def">-</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
+<dt>(<a name="proc--"><code class="proc-def">-</code></a> <var>&lt;base-cset&gt;</var> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
 <dd class="proc-def"></dd></dl>
 
 <p>
-  Char set difference.
+  Char set difference, returning <var>base-cset</var> with all characters
+  found in any of the <var>cset-sre</var>s removed.
 
 <pre class="code-example">
    (regexp-matches '(* (- (/ "az") ("aeiou"))) "xyzzy") =&gt; #&lt;regexp-match&gt;
@@ -1154,7 +1163,8 @@ string has been mutated is unspecified.
 <dd class="proc-def"></dd></dl>
 
 <p>
-  Char set intersection.
+  Char set intersection.  With no arguments is equivalent to the
+  set of all (or all ASCII) characters.
 
 <pre class="code-example">
    (regexp-matches '(* (&amp; (/ "az") (~ ("aeiou")))) "xyzzy") =&gt; #&lt;regexp-match&gt;
