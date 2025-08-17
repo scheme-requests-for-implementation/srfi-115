@@ -826,9 +826,9 @@ string has been mutated is unspecified.
   these are not equivalent to <code>alpha</code> as there are
   characters with the letter property but no case.
 
-  <p>For this and other <code>w/...</code> forms multiple SREs may be
-  provided to match as a sequence, however if used directly inside a
-  cset exactly one argument must be provided as noted in the grammar.
+  <p>For this and other <code>w/...</code> forms, multiple SREs may be
+  provided to match as a sequence.  However, if used directly inside a
+  cset, exactly one argument must be provided as noted in the grammar.
 
 <pre class="code-example">
    (regexp-search "needle" "haynEEdlehay") =&gt; #f
@@ -992,7 +992,7 @@ string has been mutated is unspecified.
 <dd class="proc-def"></dd></dl>
 
 <p>
-  The most general form, from <var>from</var> to <var>to</var> matches, inclusive.  <var>to</var> may have an implementation-defined upper-bound.
+  The most general form, from <var>from</var> to <var>to</var> matches, inclusive.  <var>to</var> may have an implementation-defined upper bound.
 
 <pre class="code-example">
    (regexp-search '(: (= 3 (** 1 3 numeric) ".") (** 1 3 numeric)) "192.168.1.10") =&gt; #&lt;regexp-match&gt;
@@ -1129,7 +1129,7 @@ string has been mutated is unspecified.
 <p>
   Char set union.  The single vertical bar form is provided for
   consistency and compatibility with SCSH, although it needs to
-  be escaped in R7RS.  With no arguments is equivalent to the
+  be escaped in R7RS.  With no arguments, is equivalent to the
   empty set.
 
 <dl><dt>(<code class="proc-def">complement</code> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
@@ -1163,7 +1163,7 @@ string has been mutated is unspecified.
 <dd class="proc-def"></dd></dl>
 
 <p>
-  Char set intersection.  With no arguments is equivalent to the
+  Char set intersection.  With no arguments, is equivalent to the
   set of all (or all ASCII) characters.
 
 <pre class="code-example">
