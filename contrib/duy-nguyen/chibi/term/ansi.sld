@@ -7,9 +7,9 @@
 
    black-escape red-escape yellow-escape green-escape
    blue-escape cyan-escape magenta-escape white-escape
-   rgb-escape 
+   rgb-escape
    gray-escape
-   rgb24-escape 
+   rgb24-escape
    reset-color-escape
 
    black-background-escape red-background-escape
