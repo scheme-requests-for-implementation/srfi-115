@@ -7,7 +7,7 @@
 
 
 
-keywords: [[https://srfi.schemers.org/?keywords=data-structure][Data Structure]], [[https://srfi.schemers.org/?keywords=r7rs-large][R7RS Large]], [[https://srfi.schemers.org/?keywords=r7rs-large-tangerine][R7RS Large: Tangerine Edition]]
+keywords: [[https://srfi.schemers.org/?keywords=data-structure][Data Structure]], [[https://srfi.schemers.org/?keywords=r7rs-large][R7RS Large]], [[https://srfi.schemers.org/?keywords=r7rs-large-tangerine][R7RS Large: Tangerine Edition]], [[https://srfi.schemers.org/?keywords=text][Text]]
 
 library-name: regexp
 
